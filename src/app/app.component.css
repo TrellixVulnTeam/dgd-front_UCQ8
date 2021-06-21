@@ -1,15 +1,17 @@
 body {
-    font-family: 'iranyekan'!important;
+    font-family: 'iranyekan', serif;
+    direction: rtl;
 }
 
 mat-toolbar {
-    font-family: 'iranyekan'!important;
+    font-family: 'iranyekan';
     background: #004a9f;
     color: white;
     padding: 16px;
 }
 
 mat-sidenav {
+    font-family: 'iranyekan';
     margin: 16px;
     width: 200px;
     border-right: none;
@@ -21,6 +23,7 @@ mat-sidenav {
 }
 
 mat-sidenav button {
+    font-family: 'iranyekan';
     color: white!important;
     background: #002b5c!important;
 }
@@ -30,6 +33,7 @@ mat-sidenav-container {
 }
 
 .content {
+    font-family: 'iranyekan';
     height: calc(100vh - 98px);
     margin: 16px;
     margin-left: 32px;
