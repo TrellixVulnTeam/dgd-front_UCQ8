@@ -29,8 +29,9 @@
                 <span>مراکز درمانی</span>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item>1</button>
-                <button mat-menu-item>2</button>
+                <button routerLink="/page-1" mat-menu-item>1</button>
+                <button routerLink="/page-2" mat-menu-item>2</button>
+                <button routerLink="/" mat-menu-item>3</button>
             </mat-menu>
             <mat-divider></mat-divider>
             <button mat-button class=" menu-button">
@@ -40,12 +41,12 @@
         </mat-sidenav>
         <mat-sidenav-content>
             <div class="content mat-elevation-z4 ">
-                Main content
+                <router-outlet></router-outlet>
             </div>
         </mat-sidenav-content>
     </mat-sidenav-container>
 
-    <!-- <router-outlet></router-outlet> -->
+
 </body>
 
 </html>
