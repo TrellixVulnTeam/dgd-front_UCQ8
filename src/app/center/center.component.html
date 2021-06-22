@@ -1,1 +1,52 @@
-<p>center works!</p>
+<div class="container">
+    <h1>مراکز درمانی</h1>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+                <th>نام</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngFor="let center of centers">
+                <td><span>{{ center.id }}</span></td>
+                <td><span>{{ center.type_id}}</span></td>
+                <td><span>{{ center.latitude }}</span></td>
+                <td><span>{{ center.longitude }}</span></td>
+                <td><span>{{ center.country_id }}</span></td>
+                <td><span>{{ center.province_id }}</span></td>
+                <td><span>{{ center.city_id }}</span></td>
+                <td><span>{{ center.area }}</span></td>
+                <td><span>{{ center.discount }}</span></td>
+                <td><span>{{ center.satisfaction }}</span></td>
+                <td><span>{{ center.technical_manager_name }}</span></td>
+                <td><span>{{ center.governmental_type }}</span></td>
+                <td><span>{{ center.logo }}</span></td>
+                <td><span>{{ center.hours_of_work_id }}</span></td>
+                <td><span>{{ center.area_name }}</span></td>
+                <td><span>{{ center.site }}</span></td>
+                <td><span>{{ center.name }}</span></td>
+                <td><span>{{ center.created_at }}</span></td>
+                <td><span>{{ center.updated_at }}</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

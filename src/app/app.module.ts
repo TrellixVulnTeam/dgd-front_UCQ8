@@ -15,6 +15,7 @@ import { InsurranceCompanyComponent } from './insurrance-company/insurrance-comp
 import { CenterTypeComponent } from './center-type/center-type.component';
 import { CenterComponent } from './center/center.component'
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: '', component: CenterComponent},
@@ -41,6 +42,7 @@ const routes: Routes = [
     MatMenuModule,
     AppRoutingModule, 
     RouterModule.forRoot(routes),
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

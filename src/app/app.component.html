@@ -29,9 +29,10 @@
                 <span>مراکز درمانی</span>
             </button>
             <mat-menu #menu="matMenu">
-                <button routerLink="/page-1" mat-menu-item>1</button>
-                <button routerLink="/page-2" mat-menu-item>2</button>
-                <button routerLink="/" mat-menu-item>3</button>
+                <button routerLink="/" mat-menu-item (click)="sidenav.toggle()">لیست مراکز</button>
+                <button routerLink="/page-1" mat-menu-item (click)="sidenav.toggle()">1</button>
+                <button routerLink="/page-2" mat-menu-item (click)="sidenav.toggle()">2</button>
+
             </mat-menu>
             <mat-divider></mat-divider>
             <button mat-button class=" menu-button">
