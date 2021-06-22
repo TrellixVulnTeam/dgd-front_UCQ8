@@ -23,13 +23,17 @@
         <span>{{title}}</span>
     </mat-toolbar>
     <mat-sidenav-container>
-        <mat-sidenav #sidenav='matSidenav'>
-            <button mat-button class=" menu-button ">
+        <mat-sidenav #sidenav='matSidenav' position="end">
+            <button mat-button class="menu-button" [matMenuTriggerFor]="menu">
                 <mat-icon>house</mat-icon>
                 <span>مراکز درمانی</span>
             </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>1</button>
+                <button mat-menu-item>2</button>
+            </mat-menu>
             <mat-divider></mat-divider>
-            <button mat-button class="menu-button ">
+            <button mat-button class=" menu-button">
                 <mat-icon>person</mat-icon>
                 <span>پزشکان</span>
             </button>
@@ -40,6 +44,8 @@
             </div>
         </mat-sidenav-content>
     </mat-sidenav-container>
+
+    <!-- <router-outlet></router-outlet> -->
 </body>
 
 </html>
