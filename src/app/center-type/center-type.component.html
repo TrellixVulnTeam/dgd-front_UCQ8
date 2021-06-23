@@ -1,1 +1,40 @@
-<p>center-type works!</p>
+
+ <div class="container">
+   
+<table mat-table [dataSource]="CenterTypes" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> شماره </th>
+    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+  </ng-container>
+
+  
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> نام </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  
+  <ng-container matColumnDef="name_en">
+    <th mat-header-cell *matHeaderCellDef> نام انگلیسی </th>
+    <td mat-cell *matCellDef="let element"> {{element.name_en}} </td>
+  </ng-container>
+
+  
+  <ng-container matColumnDef="created_at">
+    <th mat-header-cell *matHeaderCellDef> تاریخ ساخت </th>
+    <td mat-cell *matCellDef="let element"> {{element.created_at}} </td>
+  </ng-container>
+
+    
+    <ng-container matColumnDef="updated_at">
+      <th mat-header-cell *matHeaderCellDef> تاریخ آپدیت </th>
+      <td mat-cell *matCellDef="let element"> {{element.updated_at}} </td>
+    </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+
+ </div>

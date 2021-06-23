@@ -1,0 +1,40 @@
+:host(app-center-type) {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    overflow: auto;
+}
+.container {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    overflow: auto;
+}
+body {
+    font-family: 'iranyekan', serif;
+    direction: rtl;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    overflow: auto;
+    
+}
+
+* {
+    font-family: 'iranyekan';
+}
+
+table {
+    width: 100% !important;
+    text-align: center;
+}
+
+td, tr, th {
+    text-align: center!important;
+}
