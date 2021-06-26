@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
@@ -17,6 +18,10 @@ import { CenterTypeComponent } from './center-type/center-type.component';
 import { CenterComponent } from './center/center.component'
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dialog.component';
+import { FormsModule } from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+
 
 const routes: Routes = [
   { path: '', component: CenterComponent},
@@ -31,6 +36,7 @@ const routes: Routes = [
     InsurranceCompanyComponent,
     CenterTypeComponent,
     CenterComponent,
+    MatConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,12 +47,17 @@ const routes: Routes = [
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
-    MatMenuModule,
+    MatMenuModule, 
     AppRoutingModule, 
     RouterModule.forRoot(routes),
     HttpClientModule,
+    MatDialogModule,
+    FormsModule,
+    MatInputModule
+    
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[MatConfirmDialogComponent]
 })
 export class AppModule { }
