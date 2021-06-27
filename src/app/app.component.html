@@ -8,7 +8,6 @@
 </head>
 <body>
     <mat-toolbar>
-
         <button mat-icon-button *ngIf="sidenav.mode ==='over'" (click)="sidenav.toggle()">
             <mat-icon *ngIf="!sidenav.opened">
                 menu
@@ -19,6 +18,7 @@
 </button>
         <span>{{title}}</span>
     </mat-toolbar>
+    <mat-progress-bar mode='indeterminate' *ngIf='loading'></mat-progress-bar>
     <mat-sidenav-container>
         <mat-sidenav #sidenav='matSidenav' position="end">
             <button mat-button class="menu-button" [matMenuTriggerFor]="menu">
@@ -28,7 +28,7 @@
             <mat-menu #menu="matMenu">
                 <button routerLink="/" mat-menu-item (click)="sidenav.toggle()">لیست مراکز</button>
                 <button routerLink="/center-type" mat-menu-item (click)="sidenav.toggle()">ساخت انواع مراکز</button>
-                <button routerLink="/page-2" mat-menu-item (click)="sidenav.toggle()">2</button>
+                <button routerLink="/insuurance-company" mat-menu-item (click)="sidenav.toggle()">ساخت بیمه های طرف قرار داد</button>
             </mat-menu>
             <mat-divider></mat-divider>
             <button mat-button class=" menu-button">
@@ -43,7 +43,14 @@
         </mat-sidenav-content>
     </mat-sidenav-container>
 
-
+    <mat-form-field appearance="fill">
+        <mat-label>Message</mat-label>
+        <input matInput  #message>
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Action</mat-label>
+        <input matInput  #action>
+      </mat-form-field>
 </body>
-
 </html>

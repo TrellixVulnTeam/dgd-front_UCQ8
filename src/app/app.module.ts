@@ -10,6 +10,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { AppRoutingModule } from './app-routing.module';
 import { SpecialTestComponent } from './special-test/special-test.component';
@@ -21,12 +22,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dialog.component';
 import { FormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 const routes: Routes = [
   { path: '', component: CenterComponent},
   { path: 'center-type', component: CenterTypeComponent},
-  { path: 'page-2', component: InsurranceCompanyComponent},
+  { path: 'insuurance-company', component: InsurranceCompanyComponent},
 ]
 
 @NgModule({
@@ -53,7 +56,10 @@ const routes: Routes = [
     HttpClientModule,
     MatDialogModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule,
+    MatProgressBarModule,
+    MatSnackBarModule,
     
   ],
   providers: [],

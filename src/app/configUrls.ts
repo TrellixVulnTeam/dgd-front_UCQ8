@@ -3,4 +3,9 @@ export const GetCenterTypesUrl =  BaseUrl + 'center_types'
 export const DeleteCenterTypeUrl =  BaseUrl + 'center_type'
 export const EditCenterTypeUrl =  BaseUrl + 'center_type'
 export const CreateCenterTypeUrl =  BaseUrl + 'center_type'
+
+
+export const GetInsuranceCompaniesUrl =  BaseUrl + 'insurance_companies'
+export const EditInsuranceCompanyUrl =  BaseUrl + 'insurance_company'
+
  

@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CenterTypeModel, DeleteCenterTypeModel } from './center-type-model.component';
 import { CreateCenterTypeUrl, DeleteCenterTypeUrl, EditCenterTypeUrl, GetCenterTypesUrl } from '../configUrls';
 import { DialogService } from '../shared/dialog.service';
-import { center } from '../center/center-model.component';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-center-type',
@@ -16,7 +16,8 @@ export class CenterTypeComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'name_en', 'created_at', 'edit', 'delete'];
   constructor(
     private httpClient: HttpClient, 
-    private dialogService : DialogService
+    private dialogService : DialogService,
+    private appComponent : AppComponent
   ) { }
 
   
@@ -29,24 +30,40 @@ export class CenterTypeComponent implements OnInit {
   }
  
   getCenterTypes() {  
+    this.appComponent.loading=true;
     this.httpClient.get<any>(GetCenterTypesUrl).subscribe(
       response => {
-        this.CenterTypes = response.data;
-        this.CenterTypes.forEach(element => {
-          element.is_editable =false;
-        })
+        this.appComponent.loading= false;
+        if (response.success) {
+          this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+          this.CenterTypes = response.data;
+          this.CenterTypes.forEach(element => {
+            element.is_editable =false;
+          })
+        } else {
+          this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+          console.log('fail.')
+        }
+       
       }
     );
   }
 
-  onDelete(id: number) {
+  onDelete(center: CenterTypeModel) {
     this.dialogService.openConfirmDialog().afterClosed().subscribe(
       res => {
         if (res) {
-          this.httpClient.delete<any>(DeleteCenterTypeUrl + '/' + id).subscribe(
+          this.appComponent.loading = true;
+          this.httpClient.delete<any>(DeleteCenterTypeUrl + '/' + center.id).subscribe(
             response => {
+              this.appComponent.loading = false;
             if (response.success) {
+              this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
               this.getCenterTypes();
+            //  this.CenterTypes = this.appComponent.removeElementFromArray(center, this.CenterTypes); 
+            } else {
+              console.log('fail');
+              this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
             }
             }
           );
@@ -66,12 +83,17 @@ export class CenterTypeComponent implements OnInit {
 
   update(centerType: CenterTypeModel) {
     centerType._method = "put";
+    this.appComponent.loading=true;
     this.httpClient.post<any>(EditCenterTypeUrl + '/' + centerType.id, centerType).subscribe(
       response => {
+        console.log(response);
+        this.appComponent.loading= false;
        if (response.success) {
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
          centerType.is_editable =false;
        } else {
-         console.log(response.message);
+         console.log('fail');
+         this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
        }
        
       }
@@ -83,12 +105,17 @@ export class CenterTypeComponent implements OnInit {
   }
 
   create(create: CenterTypeModel){
+    this.appComponent.loading=true;
     this.httpClient.post<any>(CreateCenterTypeUrl, create).subscribe(
       response => {
+        this.appComponent.loading= false;
        if (response.success) {
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+        this.createForm =false;
        this.getCenterTypes();
        } else {
-         console.log(response.message);
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+         console.log('fail');
        }
       }
     );

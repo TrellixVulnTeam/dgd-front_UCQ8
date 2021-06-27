@@ -1,46 +1,4 @@
-:host(app-center-type) {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    text-align: center;
-    height: 100%;
-    overflow: auto;
-}
-mat-icon {
-    font-family: 'Material Icons';
-   cursor: pointer;
-}
 
-.container {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    text-align: center;
-    height: 100%;
-    overflow: auto;
-}
-body {
-    font-family: 'iranyekan', serif;
-    direction: rtl;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    text-align: center;
-    height: 100%;
-    overflow: auto;
-    
-}
 
-*, h1 {
-    font-family: 'iranyekan';
-}
 
-table {
-    width: 100% !important;
-    text-align: center;
-    height: 100%;
-}
 
-td, tr, th {
-    text-align: center!important;
-}
