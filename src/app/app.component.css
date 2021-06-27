@@ -128,7 +128,7 @@
     }
 
 
-    :host(app-center-type) {
+ :host(app-center-type) {
         padding: 0;
         margin: 0;
         width: 100%;
@@ -145,6 +145,16 @@
     height: 100%;
     overflow: auto;
 }
+
+:host(app-special-test) {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    overflow: auto;
+}
+
 mat-icon {
     font-family: 'Material Icons';
    cursor: pointer;

@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: '', component: CenterComponent},
   { path: 'center-type', component: CenterTypeComponent},
   { path: 'insuurance-company', component: InsurranceCompanyComponent},
+  { path: 'special-test', component: SpecialTestComponent},
 ]
 
 @NgModule({

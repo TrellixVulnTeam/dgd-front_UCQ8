@@ -29,6 +29,7 @@
                 <button routerLink="/" mat-menu-item (click)="sidenav.toggle()">لیست مراکز</button>
                 <button routerLink="/center-type" mat-menu-item (click)="sidenav.toggle()">ساخت انواع مراکز</button>
                 <button routerLink="/insuurance-company" mat-menu-item (click)="sidenav.toggle()">ساخت بیمه های طرف قرار داد</button>
+                <button routerLink="/special-test" mat-menu-item (click)="sidenav.toggle()">ساخت تست های مخصوص</button>
             </mat-menu>
             <mat-divider></mat-divider>
             <button mat-button class=" menu-button">
@@ -42,15 +43,5 @@
             </div>
         </mat-sidenav-content>
     </mat-sidenav-container>
-
-    <mat-form-field appearance="fill">
-        <mat-label>Message</mat-label>
-        <input matInput  #message>
-      </mat-form-field>
-      
-      <mat-form-field appearance="fill">
-        <mat-label>Action</mat-label>
-        <input matInput  #action>
-      </mat-form-field>
 </body>
 </html>

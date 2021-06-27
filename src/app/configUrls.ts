@@ -8,4 +8,7 @@ export const CreateCenterTypeUrl =  BaseUrl + 'center_type'
 export const GetInsuranceCompaniesUrl =  BaseUrl + 'insurance_companies'
 export const EditInsuranceCompanyUrl =  BaseUrl + 'insurance_company'
 
+export const GetSpecialTestsUrl =  BaseUrl + 'special_tests'
+export const EditSpecialTestUrl =  BaseUrl + 'special_test'
+
  
