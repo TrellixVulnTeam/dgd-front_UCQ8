@@ -11,4 +11,11 @@ export const EditInsuranceCompanyUrl =  BaseUrl + 'insurance_company'
 export const GetSpecialTestsUrl =  BaseUrl + 'special_tests'
 export const EditSpecialTestUrl =  BaseUrl + 'special_test'
 
+export const GetColegesUrl =  BaseUrl + 'colleges'
+export const EditCollegeUrl =  BaseUrl + 'college'
+
+
+export const GetSpecialtiesUrl =  BaseUrl + 'specialties'
+export const EditSpecialtyUrl =  BaseUrl + 'specialty'
+
  

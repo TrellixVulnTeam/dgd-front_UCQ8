@@ -155,6 +155,24 @@
     overflow: auto;
 }
 
+:host(app-college) {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    overflow: auto;
+}
+
+:host(app-specialty) {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    overflow: auto;
+}
+
 mat-icon {
     font-family: 'Material Icons';
    cursor: pointer;

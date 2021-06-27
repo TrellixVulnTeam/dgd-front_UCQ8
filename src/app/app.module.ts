@@ -24,6 +24,9 @@ import { FormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { DoctorComponent } from './doctor/doctor.component';
+import { SpecialtyComponent } from './specialty/specialty.component';
+import { CollegeComponent } from './college/college.component';
 
 
 const routes: Routes = [
@@ -31,7 +34,11 @@ const routes: Routes = [
   { path: 'center-type', component: CenterTypeComponent},
   { path: 'insuurance-company', component: InsurranceCompanyComponent},
   { path: 'special-test', component: SpecialTestComponent},
+  { path: 'doctor', component: DoctorComponent},
+  { path: 'specialty', component: SpecialtyComponent},
+  { path: 'college', component: CollegeComponent},
 ]
+
 
 @NgModule({
   declarations: [
@@ -41,6 +48,9 @@ const routes: Routes = [
     CenterTypeComponent,
     CenterComponent,
     MatConfirmDialogComponent,
+    DoctorComponent,
+    SpecialtyComponent,
+    CollegeComponent,
   ],
   imports: [
     BrowserModule,

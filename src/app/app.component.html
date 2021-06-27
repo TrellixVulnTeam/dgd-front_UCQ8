@@ -32,10 +32,15 @@
                 <button routerLink="/special-test" mat-menu-item (click)="sidenav.toggle()">ساخت تست های مخصوص</button>
             </mat-menu>
             <mat-divider></mat-divider>
-            <button mat-button class=" menu-button">
+            <button mat-button class="menu-button" [matMenuTriggerFor]="menuDoctor">
                 <mat-icon>person</mat-icon>
                 <span>پزشکان</span>
             </button>
+            <mat-menu #menuDoctor="matMenu">
+                <button routerLink="/doctor" mat-menu-item (click)="sidenav.toggle()">لیست پزشکان</button>
+                <button routerLink="/college" mat-menu-item (click)="sidenav.toggle()">ساخت  دانشگاه</button>
+                <button routerLink="/specialty" mat-menu-item (click)="sidenav.toggle()">ساخت تخصص</button>
+            </mat-menu>
         </mat-sidenav>
         <mat-sidenav-content>
             <div class="content mat-elevation-z4 ">
