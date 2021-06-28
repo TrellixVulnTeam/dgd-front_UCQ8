@@ -1,0 +1,324 @@
+
+<div class="container">
+    <div class="create-new">
+      <span>ایجاد ساعت کاری جدید</span>
+      <mat-icon title="ایجاد ساعت کاری جدید"  (click)='showCreateForm()'> library_add </mat-icon>
+      </div>
+  
+      <div *ngIf='createForm'>
+      <mat-form-field >
+        <mat-label>شروع شنبه</mat-label>
+        <input matInput name='createHoursOfWork.saturday_start' [(ngModel)] = 'createHoursOfWork.saturday_start'>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>پایان شنبه</mat-label>
+        <input matInput name='createHoursOfWork.saturday_end' [(ngModel)] = 'createHoursOfWork.saturday_end' >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>شروع یکشنبه</mat-label>
+        <input matInput name='createHoursOfWork.sunday_start' [(ngModel)] = 'createHoursOfWork.sunday_start' >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>پایان یکشنبه</mat-label>
+        <input matInput name='createHoursOfWork.sunday_end' [(ngModel)] = 'createHoursOfWork.sunday_end' >
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <mat-label>شروع دوشنبه</mat-label>
+        <input matInput name='createHoursOfWork.monday_start' [(ngModel)] = 'createHoursOfWork.monday_start' >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>پایان دوشنبه</mat-label>
+        <input matInput name='createHoursOfWork.monday_end' [(ngModel)] = 'createHoursOfWork.monday_end' >
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <mat-label>شروع سه شنبه</mat-label>
+        <input matInput name='createHoursOfWork.thursday_start' [(ngModel)] = 'createHoursOfWork.thursday_start' >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>پایان سه شنبه</mat-label>
+        <input matInput name='createHoursOfWork.thursday_end' [(ngModel)] = 'createHoursOfWork.thursday_end' >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>شروع چهار شنبه</mat-label>
+        <input matInput name='createHoursOfWork.wednesday_start' [(ngModel)] = 'createHoursOfWork.wednesday_start' >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>پایان چهار شنبه</mat-label>
+        <input matInput name='createHoursOfWork.wednesday_end' [(ngModel)] = 'createHoursOfWork.wednesday_end' >
+      </mat-form-field>
+
+
+
+      <mat-form-field>
+        <mat-label>شروع پنج شنبه</mat-label>
+        <input matInput name='createHoursOfWork.tuesday_start' [(ngModel)] = 'createHoursOfWork.tuesday_start' >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>پایان پنج شنبه</mat-label>
+        <input matInput name='createHoursOfWork.tuesday_end' [(ngModel)] = 'createHoursOfWork.tuesday_end' >
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <mat-label>شروع جمعه</mat-label>
+        <input matInput name='createHoursOfWork.friday_start' [(ngModel)] = 'createHoursOfWork.friday_start' >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>پایان جمعه</mat-label>
+        <input matInput name='createHoursOfWork.friday_end' [(ngModel)] = 'createHoursOfWork.friday_end' >
+      </mat-form-field>
+
+      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createHoursOfWork)'> check </mat-icon>
+    </div>
+     
+  
+  
+     <h1>{{ title }}</h1>
+  <table mat-table [dataSource]="HourseOfWorks" class="mat-elevation-z8">
+  
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> شماره </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+  
+    
+    <ng-container matColumnDef="saturday_start">
+      <th mat-header-cell *matHeaderCellDef> شروع شنبه </th>
+      <td mat-cell *matCellDef="let element">  
+        <span *ngIf = '!element.is_editable'>
+          {{element.saturday_start}} 
+        </span>    
+        <div *ngIf ='element.is_editable'>
+          <mat-form-field>
+            <input matInput type="text"  name={{element.saturday_start}}  [(ngModel)] = 'element.saturday_start'>
+          </mat-form-field>
+         </div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="saturday_end">
+        <th mat-header-cell *matHeaderCellDef> پایان شنبه </th>
+        <td mat-cell *matCellDef="let element">  
+          <span *ngIf = '!element.is_editable'>
+            {{element.saturday_end}} 
+          </span>    
+          <div *ngIf ='element.is_editable'>
+            <mat-form-field>
+              <input matInput type="text"  name={{element.saturday_end}}  [(ngModel)] = 'element.saturday_end'>
+            </mat-form-field>
+           </div>
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="sunday_start">
+        <th mat-header-cell *matHeaderCellDef> شروع یکشنبه </th>
+        <td mat-cell *matCellDef="let element">  
+          <span *ngIf = '!element.is_editable'>
+            {{element.sunday_start}} 
+          </span>    
+          <div *ngIf ='element.is_editable'>
+            <mat-form-field>
+              <input matInput type="text"  name={{element.sunday_start}}  [(ngModel)] = 'element.sunday_start'>
+            </mat-form-field>
+           </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="sunday_end">
+          <th mat-header-cell *matHeaderCellDef> پایان یکشنبه </th>
+          <td mat-cell *matCellDef="let element">  
+            <span *ngIf = '!element.is_editable'>
+              {{element.sunday_end}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.sunday_end}}  [(ngModel)] = 'element.sunday_end'>
+              </mat-form-field>
+             </div>
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="monday_start">
+            <th mat-header-cell *matHeaderCellDef> شروع دوشنبه </th>
+            <td mat-cell *matCellDef="let element">  
+              <span *ngIf = '!element.is_editable'>
+                {{element.monday_start}} 
+              </span>    
+              <div *ngIf ='element.is_editable'>
+                <mat-form-field>
+                  <input matInput type="text"  name={{element.monday_start}}  [(ngModel)] = 'element.monday_start'>
+                </mat-form-field>
+               </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="monday_end">
+              <th mat-header-cell *matHeaderCellDef> پایان دوشنبه </th>
+              <td mat-cell *matCellDef="let element">  
+                <span *ngIf = '!element.is_editable'>
+                  {{element.monday_end}} 
+                </span>    
+                <div *ngIf ='element.is_editable'>
+                  <mat-form-field>
+                    <input matInput type="text"  name={{element.monday_end}}  [(ngModel)] = 'element.monday_end'>
+                  </mat-form-field>
+                 </div>
+              </td>
+            </ng-container>
+
+
+
+
+        <ng-container matColumnDef="thursday_start">
+            <th mat-header-cell *matHeaderCellDef> شروع سه شنبه </th>
+            <td mat-cell *matCellDef="let element">  
+              <span *ngIf = '!element.is_editable'>
+                {{element.thursday_start}} 
+              </span>    
+              <div *ngIf ='element.is_editable'>
+                <mat-form-field>
+                  <input matInput type="text"  name={{element.thursday_start}}  [(ngModel)] = 'element.thursday_start'>
+                </mat-form-field>
+               </div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="thursday_end">
+              <th mat-header-cell *matHeaderCellDef> پایان سه شنبه </th>
+              <td mat-cell *matCellDef="let element">  
+                <span *ngIf = '!element.is_editable'>
+                  {{element.thursday_end}} 
+                </span>    
+                <div *ngIf ='element.is_editable'>
+                  <mat-form-field>
+                    <input matInput type="text"  name={{element.thursday_end}}  [(ngModel)] = 'element.thursday_end'>
+                  </mat-form-field>
+                 </div>
+              </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="wednesday_start">
+                <th mat-header-cell *matHeaderCellDef> شروع چهار شنبه </th>
+                <td mat-cell *matCellDef="let element">  
+                  <span *ngIf = '!element.is_editable'>
+                    {{element.wednesday_start}} 
+                  </span>    
+                  <div *ngIf ='element.is_editable'>
+                    <mat-form-field>
+                      <input matInput type="text"  name={{element.wednesday_start}}  [(ngModel)] = 'element.wednesday_start'>
+                    </mat-form-field>
+                   </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="wednesday_end">
+                  <th mat-header-cell *matHeaderCellDef> پایان چهار شنبه </th>
+                  <td mat-cell *matCellDef="let element">  
+                    <span *ngIf = '!element.is_editable'>
+                      {{element.wednesday_end}} 
+                    </span>    
+                    <div *ngIf ='element.is_editable'>
+                      <mat-form-field>
+                        <input matInput type="text"  name={{element.wednesday_end}}  [(ngModel)] = 'element.wednesday_end'>
+                      </mat-form-field>
+                     </div>
+                  </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="tuesday_start">
+                    <th mat-header-cell *matHeaderCellDef> شروع پنج شنبه </th>
+                    <td mat-cell *matCellDef="let element">  
+                      <span *ngIf = '!element.is_editable'>
+                        {{element.tuesday_start}} 
+                      </span>    
+                      <div *ngIf ='element.is_editable'>
+                        <mat-form-field>
+                          <input matInput type="text"  name={{element.tuesday_start}}  [(ngModel)] = 'element.tuesday_start'>
+                        </mat-form-field>
+                       </div>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="tuesday_end">
+                      <th mat-header-cell *matHeaderCellDef> پایان پنج شنبه </th>
+                      <td mat-cell *matCellDef="let element">  
+                        <span *ngIf = '!element.is_editable'>
+                          {{element.tuesday_end}} 
+                        </span>    
+                        <div *ngIf ='element.is_editable'>
+                          <mat-form-field>
+                            <input matInput type="text"  name={{element.tuesday_end}}  [(ngModel)] = 'element.tuesday_end'>
+                          </mat-form-field>
+                         </div>
+                      </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="friday_start">
+                        <th mat-header-cell *matHeaderCellDef> شروع جمعه </th>
+                        <td mat-cell *matCellDef="let element">  
+                          <span *ngIf = '!element.is_editable'>
+                            {{element.friday_start}} 
+                          </span>    
+                          <div *ngIf ='element.is_editable'>
+                            <mat-form-field>
+                              <input matInput type="text"  name={{element.friday_start}}  [(ngModel)] = 'element.friday_start'>
+                            </mat-form-field>
+                           </div>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="friday_end">
+                          <th mat-header-cell *matHeaderCellDef> پایان جمعه </th>
+                          <td mat-cell *matCellDef="let element">  
+                            <span *ngIf = '!element.is_editable'>
+                              {{element.friday_end}} 
+                            </span>    
+                            <div *ngIf ='element.is_editable'>
+                              <mat-form-field>
+                                <input matInput type="text"  name={{element.friday_end}}  [(ngModel)] = 'element.friday_end'>
+                              </mat-form-field>
+                             </div>
+                          </td>
+                        </ng-container>
+  
+    
+  
+  
+    
+    <ng-container matColumnDef="created_at">
+      <th mat-header-cell *matHeaderCellDef> تاریخ ساخت </th>
+      <td mat-cell *matCellDef="let element"> {{element.created_at}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef> تغییر </th>
+       <td mat-cell *matCellDef="let element" id= {{element.id}}> 
+         <div *ngIf='!element.is_editable'>
+          <mat-icon (click)='onEdit(element)'> edit </mat-icon>
+         </div>
+         <div *ngIf='element.is_editable'>
+          <mat-icon (click)='update(element)'> check </mat-icon>
+         </div>
+       </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> حذف </th>
+      <td mat-cell *matCellDef="let element" id= {{element.id}} >
+        <div *ngIf='!element.is_editable'>
+         <mat-icon (click)='onDelete(element)'> delete </mat-icon> 
+        </div>
+        <div *ngIf='element.is_editable'>
+          <mat-icon (click)='cancelEdit(element)'> cancel </mat-icon> 
+        </div>
+        </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  </div>

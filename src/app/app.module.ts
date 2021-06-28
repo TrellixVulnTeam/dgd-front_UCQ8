@@ -27,6 +27,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { DoctorComponent } from './doctor/doctor.component';
 import { SpecialtyComponent } from './specialty/specialty.component';
 import { CollegeComponent } from './college/college.component';
+import { HoursOfWorkComponent } from './hours-of-work/hours-of-work.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'doctor', component: DoctorComponent},
   { path: 'specialty', component: SpecialtyComponent},
   { path: 'college', component: CollegeComponent},
+  { path: 'hours_of_work', component: HoursOfWorkComponent},
 ]
 
 
@@ -51,6 +53,7 @@ const routes: Routes = [
     DoctorComponent,
     SpecialtyComponent,
     CollegeComponent,
+    HoursOfWorkComponent,
   ],
   imports: [
     BrowserModule,
