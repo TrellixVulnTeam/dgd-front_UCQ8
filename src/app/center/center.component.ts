@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { CenterModel } from './center-model.component';
-import { EditCenterUrl, EditHourseOfWorkUrl, GetCentersUrl } from '../configUrls';
+import { AddressModel, CenterModel, ImageModel, PhoneModel } from './center-model.component';
+import { ImageUrl, EditCenterUrl, EditHourseOfWorkUrl, GetCentersUrl, PhoneUrl, AddressUrl } from '../configUrls';
 import { DialogService } from '../shared/dialog.service';
 import { AppComponent } from '../app.component';
 
@@ -32,6 +32,8 @@ export class CenterComponent implements OnInit {
          'province',
          'city',
          'images',
+         'phones',
+         'addresses',
          'edit',
          'delete',
         //  'updated_at',
@@ -43,7 +45,9 @@ export class CenterComponent implements OnInit {
   ) { }
 
   
-  createCenter = new CenterModel(0, '', '', '', 0, '', 0, 0, 0, '', 0 , 0, '', '' , '',false, [],[],[],[],[]);
+  createCenter = new CenterModel(0, '', '', '', 0, '', 0, 0, 0, '', 0 , 0, '', '' , '',false, false, false,[],[],[],[],[],[],[]);
+  createPhone = new PhoneModel(0,'','centers','post');
+  createAddress = new AddressModel(0,'','','centers','post');
 
 
   Centers : CenterModel[] = []
@@ -142,6 +146,150 @@ export class CenterComponent implements OnInit {
       }
     );
   }
+
+  deleteImage(image: any) {
+    console.log(image);
+    this.dialogService.openConfirmDialog().afterClosed().subscribe(
+      res => {
+        if (res) {
+          this.appComponent.loading = true;
+          this.httpClient.delete<any>(ImageUrl + '/' + image.id).subscribe(
+            response => {
+              this.appComponent.loading = false;
+            if (response.success) {
+              this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+              this.getCenters();
+            //  this.CenterTypes = this.appComponent.removeElementFromArray(center, this.CenterTypes); 
+            } else {
+              console.log('fail');
+              this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+            }
+            }
+          );
+        }
+      }
+
+    )
+  }
+
+  addImage(center_id : number, event:any) {
+    let file = <File>event.target.files[0];
+     const formData = new FormData(); 
+     formData.append('image', file);
+     formData.append('type', 'centers');
+    this.appComponent.loading=true;
+    this.httpClient.post<any>(ImageUrl + '/' + center_id, formData).subscribe(
+      response => {
+        this.appComponent.loading= false;
+       if (response.success) {
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+       this.getCenters();
+       } else {
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+         console.log('fail');
+       }
+      }
+    );
+
+  }
+
+
+  deletePhone(phone: any) {
+    this.dialogService.openConfirmDialog().afterClosed().subscribe(
+      res => {
+        if (res) {
+          this.appComponent.loading = true;
+          this.httpClient.delete<any>(PhoneUrl + '/' + phone.id).subscribe(
+            response => {
+              this.appComponent.loading = false;
+            if (response.success) {
+              this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+              this.getCenters();
+            //  this.CenterTypes = this.appComponent.removeElementFromArray(center, this.CenterTypes); 
+            } else {
+              console.log('fail');
+              this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+            }
+            }
+          );
+        }
+      }
+
+    )
+  }
+  
+  editPhone(elemen:any) {
+    elemen.phone_editable = true;
+  }
+
+  addPhone(phone: PhoneModel, center_id: number) {
+    console.log(phone);
+    this.appComponent.loading=true;
+    this.httpClient.post<any>(PhoneUrl + '/' + center_id, phone).subscribe(
+      response => {
+        this.appComponent.loading= false;
+       if (response.success) {
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+       this.getCenters();
+       } else {
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+         console.log('fail');
+       }
+      }
+    );
+
+  }
+
+
+  
+
+
+  deleteAddress(address: any) {
+    this.dialogService.openConfirmDialog().afterClosed().subscribe(
+      res => {
+        if (res) {
+          this.appComponent.loading = true;
+          this.httpClient.delete<any>(AddressUrl + '/' + address.id).subscribe(
+            response => {
+              this.appComponent.loading = false;
+            if (response.success) {
+              this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+              this.getCenters();
+            //  this.CenterTypes = this.appComponent.removeElementFromArray(center, this.CenterTypes); 
+            } else {
+              console.log('fail');
+              this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+            }
+            }
+          );
+        }
+      }
+
+    )
+  }
+  
+  editAddress(elemen:any) {
+    elemen.address_editable = true;
+  }
+
+  addAddress(address: AddressModel, center_id: number) {
+
+    this.appComponent.loading=true;
+    this.httpClient.post<any>(AddressUrl + '/' + center_id, address).subscribe(
+      response => {
+        this.appComponent.loading= false;
+       if (response.success) {
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+       this.getCenters();
+       } else {
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+         console.log('fail');
+       }
+      }
+    );
+
+  }
+  
 
 }
 

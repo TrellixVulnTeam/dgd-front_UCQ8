@@ -17,6 +17,8 @@ export class CenterModel {
         public updated_at :string,
         public _method :string,
         public is_editable :boolean,
+        public phone_editable :boolean,
+        public address_editable :boolean,
 
         // public country_id : number,
         // public province_id : number,
@@ -27,7 +29,9 @@ export class CenterModel {
         public country: Country,
         public province: Province,
         public city: City,
-        public images: Image[],
+        public images: ImageModel[],
+        public phones: PhoneModel[],
+        public addresses: AddressModel[],
     ) {
 
     }
@@ -77,10 +81,40 @@ export class City {
     }
 }
 
-export class Image {
+export class ImageModel {
     constructor(
-        id : number,
-        path: string,
+      public  id : number,
+      public  path: string,
+      public image : any,
+      public type : string,
+      public _method :string,
+    ) {
+
+    }
+}
+
+
+
+export class PhoneModel {
+    constructor(
+      public  id : number,
+      public phone : string,
+      public type : string,
+      public _method :string,
+    ) {
+
+    }
+}
+
+
+
+export class AddressModel {
+    constructor(
+      public  id : number,
+      public address : string,
+      public neighbourhood : string,
+      public type : string,
+      public _method :string,
     ) {
 
     }

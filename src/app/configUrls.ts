@@ -27,4 +27,10 @@ export const EditSpecialtyUrl =  BaseUrl + 'specialty'
 export const GetHoursOfWorksUrl =  BaseUrl + 'hours_of_works'
 export const EditHourseOfWorkUrl =  BaseUrl + 'hours_of_work'
 
+
+export const ImageUrl = BaseUrl + 'image'
+export const PhoneUrl = BaseUrl + 'phone'
+export const AddressUrl = BaseUrl + 'address'
+
+
  
