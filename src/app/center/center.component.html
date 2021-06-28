@@ -1,52 +1,398 @@
 <div class="container">
-    <h1>مراکز درمانی</h1>
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-                <th>نام</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="create-new">
+      <span>ساخت مرکز جدید</span>
+      <mat-icon title="ساخت مرکز جدید"  (click)='showCreateForm()'> library_add </mat-icon>
+      </div>
+  
+      <div *ngIf='createForm'>
+      <mat-form-field >
+        <mat-label>نام</mat-label>
+        <input matInput name='createCenter.name' [(ngModel)] = 'createCenter.name'>
+      </mat-form-field>
+  
+      
+      <mat-form-field>
+        <mat-label>سایت</mat-label>
+        <input matInput name='createCenter.site' [(ngModel)] = 'createCenter.site' >
+      </mat-form-field>
+      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
 
-            <tr *ngFor="let center of centers">
-                <td><span>{{ center.id }}</span></td>
-                <td><span>{{ center.type_id}}</span></td>
-                <td><span>{{ center.latitude }}</span></td>
-                <td><span>{{ center.longitude }}</span></td>
-                <td><span>{{ center.country_id }}</span></td>
-                <td><span>{{ center.province_id }}</span></td>
-                <td><span>{{ center.city_id }}</span></td>
-                <td><span>{{ center.area }}</span></td>
-                <td><span>{{ center.discount }}</span></td>
-                <td><span>{{ center.satisfaction }}</span></td>
-                <td><span>{{ center.technical_manager_name }}</span></td>
-                <td><span>{{ center.governmental_type }}</span></td>
-                <td><span>{{ center.logo }}</span></td>
-                <td><span>{{ center.hours_of_work_id }}</span></td>
-                <td><span>{{ center.area_name }}</span></td>
-                <td><span>{{ center.site }}</span></td>
-                <td><span>{{ center.name }}</span></td>
-                <td><span>{{ center.created_at }}</span></td>
-                <td><span>{{ center.updated_at }}</span></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+
+      <mat-form-field>
+        <mat-label>مسول فنی</mat-label>
+        <input matInput name='createCenter.technical_manager_name' [(ngModel)] = 'createCenter.technical_manager_name' >
+      </mat-form-field>
+      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+
+
+      <mat-form-field>
+        <mat-label>منطقه</mat-label>
+        <input matInput name='createCenter.area' [(ngModel)] = 'createCenter.area' >
+      </mat-form-field>
+      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+
+
+      <mat-form-field>
+        <mat-label>نام محل </mat-label>
+        <input matInput name='createCenter.area_name' [(ngModel)] = 'createCenter.area_name' >
+      </mat-form-field>
+      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+
+      <mat-form-field>
+        <mat-label>تخفیف </mat-label>
+        <input matInput name='createCenter.discount' [(ngModel)] = 'createCenter.discount' >
+      </mat-form-field>
+      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+
+      <mat-form-field>
+        <mat-label> رضایت مندی </mat-label>
+        <input matInput name='createCenter.satisfaction' [(ngModel)] = 'createCenter.satisfaction' >
+      </mat-form-field>
+      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+
+
+      <mat-form-field>
+        <mat-label> ساعت کاری </mat-label>
+        <input matInput name='createCenter.hours_of_work_id' [(ngModel)] = 'createCenter.hours_of_work_id' >
+      </mat-form-field>
+      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+
+      <mat-form-field>
+        <mat-label> حالت مرکز </mat-label>
+        <input matInput name='createCenter.governmental_type' [(ngModel)] = 'createCenter.governmental_type' >
+      </mat-form-field>
+      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+
+      <mat-form-field>
+        <mat-label> عرض جغرافیایی </mat-label>
+        <input matInput name='createCenter.latitude' [(ngModel)] = 'createCenter.latitude' >
+      </mat-form-field>
+      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+
+      <mat-form-field>
+        <mat-label> طول جغرافیایی </mat-label>
+        <input matInput name='createCenter.longitude' [(ngModel)] = 'createCenter.longitude' >
+      </mat-form-field>
+      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+
+      <mat-form-field>
+        <mat-label> لوگو</mat-label>
+        <input matInput name='createCenter.logo' [(ngModel)] = 'createCenter.logo' >
+      </mat-form-field>
+      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+    </div>
+     
+  
+  
+     <h1>{{ title }}</h1>
+  <table mat-table [dataSource]="Centers" class="mat-elevation-z8">
+  
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> شماره </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+  
+
+    <ng-container matColumnDef="center_type">
+        <th mat-header-cell *matHeaderCellDef>  نوع مرکز </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.center_type.name}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.center_type.name}}  [(ngModel)] = 'element.center_type.name'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+    
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> نام </th>
+      <td mat-cell *matCellDef="let element">  
+        <span *ngIf = '!element.is_editable'>
+          {{element.name}} 
+        </span>    
+        <div *ngIf ='element.is_editable'>
+          <mat-form-field>
+            <input matInput type="text"  name={{element.name}}  [(ngModel)] = 'element.name'>
+          </mat-form-field>
+         </div>
+      </td>
+    </ng-container>
+  
+    
+    <ng-container matColumnDef="site">
+      <th mat-header-cell *matHeaderCellDef>  سایت </th>
+        <td  mat-cell *matCellDef="let element"> 
+          <span *ngIf = '!element.is_editable'>
+            {{element.site}} 
+          </span>    
+          <div *ngIf ='element.is_editable'>
+            <mat-form-field>
+              <input matInput type="text"  name={{element.site}}  [(ngModel)] = 'element.site'>
+            </mat-form-field>
+           </div>
+        </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="technical_manager_name">
+        <th mat-header-cell *matHeaderCellDef>  مسول فنی </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.technical_manager_name}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.technical_manager_name}}  [(ngModel)] = 'element.technical_manager_name'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="area">
+        <th mat-header-cell *matHeaderCellDef> منطقه </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.area}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.area}}  [(ngModel)] = 'element.area'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="area_name">
+        <th mat-header-cell *matHeaderCellDef> نام محل</th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.area_name}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.area_name}}  [(ngModel)] = 'element.area_name'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="discount">
+        <th mat-header-cell *matHeaderCellDef> تخفیف </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.discount}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.discount}}  [(ngModel)] = 'element.discount'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+      
+      <ng-container matColumnDef="satisfaction">
+        <th mat-header-cell *matHeaderCellDef> رضایت مندی </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.satisfaction}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.satisfaction}}  [(ngModel)] = 'element.satisfaction'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="hours_of_work_id">
+        <th mat-header-cell *matHeaderCellDef> ساعت کاری </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.hours_of_work_id}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.hours_of_work_id}}  [(ngModel)] = 'element.hours_of_work_id'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="governmental_type">
+        <th mat-header-cell *matHeaderCellDef>حالت مرکز </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.governmental_type}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.governmental_type}}  [(ngModel)] = 'element.governmental_type'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="latitude">
+        <th mat-header-cell *matHeaderCellDef> عرض جغرافیایی </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.latitude}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.latitude}}  [(ngModel)] = 'element.latitude'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="longitude">
+        <th mat-header-cell *matHeaderCellDef> طول جغرافیایی </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.longitude}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.longitude}}  [(ngModel)] = 'element.longitude'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="logo">
+        <th mat-header-cell *matHeaderCellDef>  لوگو </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.logo}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.logo}}  [(ngModel)] = 'element.logo'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef>  کشور </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.country.name}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.country.name}}  [(ngModel)] = 'element.country.name'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="province">
+        <th mat-header-cell *matHeaderCellDef>  استان </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.province.name}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.province.name}}  [(ngModel)] = 'element.province.name'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef>  شهر </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.city.name}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.city.name}}  [(ngModel)] = 'element.city.name'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="images">
+        <th mat-header-cell *matHeaderCellDef>  عکسهای مرکز  </th>
+          <td  mat-cell *matCellDef="let element"> 
+
+
+            <a  *ngFor="let image of element.images" href="{{image.path}}">
+              {{image.path}} 
+              <mat-icon title="پاک کردن عکس">close</mat-icon>
+              <br>
+            </a> 
+            <div class="inputWrapper">
+                <input class="fileInput" type="file" name="file1"/>
+            </div>
+            <!-- <mat-icon title="اضاه کردن عکس">add</mat-icon> -->
+            
+            
+
+            <!-- <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.images.path}}  [(ngModel)] = 'element.images.path'>
+              </mat-form-field>
+             </div> -->
+
+
+
+
+          </td>
+      </ng-container>
+      
+  
+    
+    <ng-container matColumnDef="updated_at">
+      <th mat-header-cell *matHeaderCellDef> تاریخ ساخت </th>
+      <td mat-cell *matCellDef="let element"> {{element.updated_at}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef> تغییر </th>
+       <td mat-cell *matCellDef="let element" id= {{element.id}}> 
+         <div *ngIf='!element.is_editable'>
+          <mat-icon (click)='onEdit(element)'> edit </mat-icon>
+         </div>
+         <div *ngIf='element.is_editable'>
+          <mat-icon (click)='update(element)'> check </mat-icon>
+         </div>
+       </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> حذف </th>
+      <td mat-cell *matCellDef="let element" id= {{element.id}} >
+        <div *ngIf='!element.is_editable'>
+         <mat-icon (click)='onDelete(element)'> delete </mat-icon> 
+        </div>
+        <div *ngIf='element.is_editable'>
+          <mat-icon (click)='cancelEdit(element)'> cancel </mat-icon> 
+        </div>
+        </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  </div>

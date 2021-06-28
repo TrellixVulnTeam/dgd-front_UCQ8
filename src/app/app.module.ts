@@ -16,7 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { SpecialTestComponent } from './special-test/special-test.component';
 import { InsurranceCompanyComponent } from './insurrance-company/insurrance-company.component';
 import { CenterTypeComponent } from './center-type/center-type.component';
-import { CenterComponent } from './center/center.component'
+import { CenterComponent } from './center/center.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dialog.component';
@@ -28,6 +28,7 @@ import { DoctorComponent } from './doctor/doctor.component';
 import { SpecialtyComponent } from './specialty/specialty.component';
 import { CollegeComponent } from './college/college.component';
 import { HoursOfWorkComponent } from './hours-of-work/hours-of-work.component';
+
 
 
 const routes: Routes = [
