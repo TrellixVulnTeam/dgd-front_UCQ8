@@ -31,6 +31,7 @@ export const EditHourseOfWorkUrl =  BaseUrl + 'hours_of_work'
 export const ImageUrl = BaseUrl + 'image'
 export const PhoneUrl = BaseUrl + 'phone'
 export const AddressUrl = BaseUrl + 'address'
+export const SpecialTestsCenterUrl = BaseUrl + 'special_test_center'
 
 
  

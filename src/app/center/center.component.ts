@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { AddressModel, CenterModel, ImageModel, PhoneModel } from './center-model.component';
-import { ImageUrl, EditCenterUrl, EditHourseOfWorkUrl, GetCentersUrl, PhoneUrl, AddressUrl } from '../configUrls';
+import { AddressModel, CenterModel, ImageModel, PhoneModel, SpecialTestCenterModel } from './center-model.component';
+import { ImageUrl, EditCenterUrl, EditHourseOfWorkUrl, GetCentersUrl, PhoneUrl, AddressUrl, SpecialTestsCenterUrl } from '../configUrls';
 import { DialogService } from '../shared/dialog.service';
 import { AppComponent } from '../app.component';
+import { SpecialTestModel } from '../special-test/special-test-model.component';
 
 @Component({
   selector: 'app-center',
@@ -34,6 +35,7 @@ export class CenterComponent implements OnInit {
          'images',
          'phones',
          'addresses',
+         'special_tests',
          'edit',
          'delete',
         //  'updated_at',
@@ -45,9 +47,16 @@ export class CenterComponent implements OnInit {
   ) { }
 
   
-  createCenter = new CenterModel(0, '', '', '', 0, '', 0, 0, 0, '', 0 , 0, '', '' , '',false, false, false,[],[],[],[],[],[],[]);
+// columns
+showPhoneColumns = false;
+showImagesColumns = false;
+showAddressesColumns = false;
+showSpecialTestsColumns = false;
+
+  createCenter = new CenterModel(0, '', '', '', 0, '', 0, 0, 0, '', 0 , 0, '', '' , '',false, false, false, false ,[],[],[],[],[],[],[], []);
   createPhone = new PhoneModel(0,'','centers','post');
   createAddress = new AddressModel(0,'','','centers','post');
+  createSpecialTests = new SpecialTestModel(0,'','','','post', false);
 
 
   Centers : CenterModel[] = []
@@ -241,9 +250,6 @@ export class CenterComponent implements OnInit {
   }
 
 
-  
-
-
   deleteAddress(address: any) {
     this.dialogService.openConfirmDialog().afterClosed().subscribe(
       res => {
@@ -273,7 +279,6 @@ export class CenterComponent implements OnInit {
   }
 
   addAddress(address: AddressModel, center_id: number) {
-
     this.appComponent.loading=true;
     this.httpClient.post<any>(AddressUrl + '/' + center_id, address).subscribe(
       response => {
@@ -289,7 +294,71 @@ export class CenterComponent implements OnInit {
     );
 
   }
+
+
+  deleteSpecialTestCenter(specialTestCenter: any) {
+    this.dialogService.openConfirmDialog().afterClosed().subscribe(
+      res => {
+        if (res) {
+          this.appComponent.loading = true;
+          this.httpClient.delete<any>(SpecialTestsCenterUrl + '/' + specialTestCenter.id).subscribe(
+            response => {
+              this.appComponent.loading = false;
+            if (response.success) {
+              this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+              this.getCenters();
+            //  this.CenterTypes = this.appComponent.removeElementFromArray(center, this.CenterTypes); 
+            } else {
+              console.log('fail');
+              this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+            }
+            }
+          );
+        }
+      }
+
+    )
+  }
   
+  editSpecialTestCenter(elemen:any) {
+    elemen.special_test_center_editable = true;
+  }
+
+  addSpecialTestCenter(special_test_center: SpecialTestCenterModel, center_id: number) {
+    this.appComponent.loading=true;
+    this.httpClient.post<any>(SpecialTestsCenterUrl + '/' + center_id, special_test_center.id).subscribe(
+      response => {
+        this.appComponent.loading= false;
+       if (response.success) {
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+       this.getCenters();
+       } else {
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+         console.log('fail');
+       }
+      }
+    );
+
+  }
+
+  toggleColumn(column: string){
+    switch (column)
+    {
+      case "phones" :
+      this.showPhoneColumns = !this.showPhoneColumns;
+      break;
+      case "images": 
+      this.showImagesColumns = !this.showImagesColumns;
+      break;
+      case "addresses": 
+      this.showAddressesColumns = !this.showAddressesColumns;
+      break;
+      case "special_tests": 
+      this.showSpecialTestsColumns = !this.showSpecialTestsColumns;
+      break;
+    }
+ 
+  }
 
 }
 

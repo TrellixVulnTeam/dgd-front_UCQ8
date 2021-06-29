@@ -19,6 +19,7 @@ export class CenterModel {
         public is_editable :boolean,
         public phone_editable :boolean,
         public address_editable :boolean,
+        public special_test_center_editable :boolean,
 
         // public country_id : number,
         // public province_id : number,
@@ -32,6 +33,7 @@ export class CenterModel {
         public images: ImageModel[],
         public phones: PhoneModel[],
         public addresses: AddressModel[],
+        public special_tests_center: SpecialTestCenterModel[],
     ) {
 
     }
@@ -114,6 +116,18 @@ export class AddressModel {
       public address : string,
       public neighbourhood : string,
       public type : string,
+      public _method :string,
+    ) {
+
+    }
+}
+
+
+export class SpecialTestCenterModel {
+    constructor(
+      public  id : number,
+      public name : string,
+      public name_en : string,
       public _method :string,
     ) {
 
