@@ -31,6 +31,7 @@ import { HoursOfWorkComponent } from './hours-of-work/hours-of-work.component';
 
 
 
+
 const routes: Routes = [
   { path: '', component: CenterComponent},
   { path: 'center-type', component: CenterTypeComponent},
@@ -77,7 +78,7 @@ const routes: Routes = [
     MatSnackBarModule,
     
   ],
-  providers: [],
+  providers: [SpecialTestComponent],
   bootstrap: [AppComponent],
   entryComponents:[MatConfirmDialogComponent]
 })

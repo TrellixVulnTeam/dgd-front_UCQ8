@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { AddressModel, CenterModel, ImageModel, PhoneModel, SpecialTestCenterModel } from './center-model.component';
+import { AddressModel, CenterModel, ImageModel, PhoneModel, Pivot, SpecialTestCenterModel } from './center-model.component';
 import { ImageUrl, EditCenterUrl, EditHourseOfWorkUrl, GetCentersUrl, PhoneUrl, AddressUrl, SpecialTestsCenterUrl } from '../configUrls';
 import { DialogService } from '../shared/dialog.service';
 import { AppComponent } from '../app.component';
 import { SpecialTestModel } from '../special-test/special-test-model.component';
+import { SpecialTestComponent } from '../special-test/special-test.component';
 
 @Component({
   selector: 'app-center',
@@ -43,7 +44,8 @@ export class CenterComponent implements OnInit {
   constructor(
     private httpClient: HttpClient, 
     private dialogService : DialogService,
-    private appComponent : AppComponent
+    private appComponent : AppComponent,
+    private specialTestComponent : SpecialTestComponent
   ) { }
 
   
@@ -56,12 +58,19 @@ showSpecialTestsColumns = false;
   createCenter = new CenterModel(0, '', '', '', 0, '', 0, 0, 0, '', 0 , 0, '', '' , '',false, false, false, false ,[],[],[],[],[],[],[], []);
   createPhone = new PhoneModel(0,'','centers','post');
   createAddress = new AddressModel(0,'','','centers','post');
-  createSpecialTests = new SpecialTestModel(0,'','','','post', false);
+
+  pivot = new Pivot(0);
+  pivot_id : number = 0
+  createSpecialTests = new SpecialTestCenterModel(0, '', '', '', this.pivot);
 
 
   Centers : CenterModel[] = []
+  SpecialTests : SpecialTestModel[] = []
+
+ 
   ngOnInit(): void {
     this.getCenters();
+    this.specialTestComponent.getSpecialTests();
   }
  
   getCenters() {  
@@ -296,12 +305,13 @@ showSpecialTestsColumns = false;
   }
 
 
-  deleteSpecialTestCenter(specialTestCenter: any) {
+  deleteSpecialTestCenter(specialTestCenterPivot: any) {
+    console.log(specialTestCenterPivot);
     this.dialogService.openConfirmDialog().afterClosed().subscribe(
       res => {
         if (res) {
           this.appComponent.loading = true;
-          this.httpClient.delete<any>(SpecialTestsCenterUrl + '/' + specialTestCenter.id).subscribe(
+          this.httpClient.delete<any>(SpecialTestsCenterUrl + '/' + specialTestCenterPivot.id).subscribe(
             response => {
               this.appComponent.loading = false;
             if (response.success) {
@@ -322,11 +332,14 @@ showSpecialTestsColumns = false;
   
   editSpecialTestCenter(elemen:any) {
     elemen.special_test_center_editable = true;
+    this.SpecialTests = this.specialTestComponent.SpecialTests;
   }
 
-  addSpecialTestCenter(special_test_center: SpecialTestCenterModel, center_id: number) {
+  
+  addSpecialTestCenter(special_test_center_id: number, center_id: number) {
+    console.log(special_test_center_id, center_id);
     this.appComponent.loading=true;
-    this.httpClient.post<any>(SpecialTestsCenterUrl + '/' + center_id, special_test_center.id).subscribe(
+    this.httpClient.post<any>(SpecialTestsCenterUrl + '/' + center_id, special_test_center_id).subscribe(
       response => {
         this.appComponent.loading= false;
        if (response.success) {

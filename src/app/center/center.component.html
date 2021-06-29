@@ -416,15 +416,21 @@
             <span>
               {{special_test.name}}  
             </span> 
-            <mat-icon class="delete-phone" title='پاک کردن تستهای خاص'  (click) = 'deleteSpecialTestCenter(special_test)'>close</mat-icon>
+            <mat-icon class="delete-phone" title='پاک کردن تستهای خاص'  (click) = 'deleteSpecialTestCenter(special_test.pivot)'>close</mat-icon>
             <br>
           </div> 
           <mat-icon title='اضافه کردن تستهای خاص' (click)="editSpecialTestCenter(element)">add</mat-icon>
           <div *ngIf='element.special_test_center_editable'>
           <mat-form-field>
-            <!-- todo must load special tests -->
+           <mat-select [(ngModel)] = 'pivot_id'>
+             <mat-option *ngFor='let special_test of this.SpecialTests' value='{{ special_test.id}}' >
+                 {{ special_test.id }}
+
+                 <!-- inja moshkel ine ke pivot_id por nemishe  -->
+             </mat-option>
+             </mat-select>
           </mat-form-field>  
-          <mat-icon class="delete-phone" (click)="addSpecialTestCenter(createSpecialTests, element.id)">check</mat-icon>
+          <mat-icon class="delete-phone" (click)="addSpecialTestCenter(pivot_id, element.id)">check</mat-icon>
         </div>
       </div>
 

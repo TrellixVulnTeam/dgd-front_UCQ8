@@ -129,6 +129,16 @@ export class SpecialTestCenterModel {
       public name : string,
       public name_en : string,
       public _method :string,
+      public pivot : Pivot,
+    ) {
+
+    }
+}
+
+
+export class Pivot {
+    constructor(
+      public  id : number,
     ) {
 
     }
