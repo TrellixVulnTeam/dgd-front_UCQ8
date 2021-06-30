@@ -20,11 +20,12 @@ export class CenterModel {
         public phone_editable :boolean,
         public address_editable :boolean,
         public special_test_center_editable :boolean,
+        public insurance_company_center_editable :boolean,
 
-        // public country_id : number,
-        // public province_id : number,
-        // public city_id : number,
-        // public type_id : number,
+        public country_id : number,
+        public province_id : number,
+        public city_id : number,
+        public type_id : number,
 
         public center_type: CenterType,
         public country: Country,
@@ -34,6 +35,7 @@ export class CenterModel {
         public phones: PhoneModel[],
         public addresses: AddressModel[],
         public special_tests_center: SpecialTestCenterModel[],
+        public insurance_companies_center: InsuranceCompanyCenterModel[],
     ) {
 
     }
@@ -63,10 +65,10 @@ export class Country {
 
 export class Province {
     constructor(
-        id : number,
-        countrry: number,
-        name: string,
-        name_en: string,
+       public  id : number,
+       public   countrry: number,
+       public  name: string,
+       public  name_en: string,
     ) {
 
     }
@@ -74,10 +76,10 @@ export class Province {
 
 export class City {
     constructor(
-        id : number,
-        countrry: number,
-        name: string,
-        name_en: string,
+        public   id : number,
+        public   province: number,
+        public name: string,
+        public name_en: string,
     ) {
 
     }
@@ -136,9 +138,26 @@ export class SpecialTestCenterModel {
 }
 
 
+export class InsuranceCompanyCenterModel {
+    constructor(
+      public  id : number,
+      public name : string,
+      public name_en : string,
+      public _method :string,
+      public pivot : Pivot,
+      public type : string,
+    ) {
+
+    }
+}
+
+
 export class Pivot {
     constructor(
       public  id : number,
+      public  special_test_id : number,
+      public  insurance_company_id : number,
+      public  center_id : number,
     ) {
 
     }

@@ -1,6 +1,8 @@
 // export const  BaseUrl = 'http://185.81.96.196:8000/api/';
 export const  BaseUrl = 'http://127.0.0.1:8000/api/';
 
+export const GetProvincesUrl =  BaseUrl + 'provinces'
+export const GetCitiesUrl =  BaseUrl + 'cities'
 
 export const GetCentersUrl =  BaseUrl + 'centers'
 export const EditCenterUrl =  BaseUrl + 'center'
@@ -32,6 +34,7 @@ export const ImageUrl = BaseUrl + 'image'
 export const PhoneUrl = BaseUrl + 'phone'
 export const AddressUrl = BaseUrl + 'address'
 export const SpecialTestsCenterUrl = BaseUrl + 'special_test_center'
+export const InsuranceCompaniesCenterUrl = BaseUrl + 'insurance_company_center'
 
 
  
