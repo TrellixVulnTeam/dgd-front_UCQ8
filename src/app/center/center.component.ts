@@ -211,6 +211,32 @@ emptyCities = new City(0,0,'','');
     );
   }
 
+  // update(center: CenterModel) {
+  //   console.log(22);
+  //   center._method = "put";
+  //   this.appComponent.loading=true;
+  //   this.httpClient.post<any>(EditCenterUrl + '/' + center.id, center).pipe(
+
+  //     tap(response => console.log(22)),
+  //     catchError(this.handleError<any[]>('getHeroes', [])),
+
+
+  //   ).subscribe(
+  //     Response => {
+  //       console.log(Response);
+  //     }
+  //   );
+  // }
+
+  // private handleError<T>(operation = 'operation', result?: T) {
+  //   return (error: any): Observable<T> => {
+  //     // Let the app keep running by returning an empty result.
+  //     console.log(error);
+  //     this.appComponent.loading =false;
+  //     return of(result as T);
+  //   };
+  // }
+
   showCreateForm() {
     this.createForm = true;
     this.CenterTypes = this.centerTypeComponent.CenterTypes;
