@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { AddressModel, CenterModel, City, ImageModel, InsuranceCompanyCenterModel, PhoneModel, Pivot, Province, SpecialTestCenterModel } from './center-model.component';
-import { ImageUrl, EditCenterUrl, EditHourseOfWorkUrl, GetCentersUrl, PhoneUrl, AddressUrl, SpecialTestsCenterUrl, InsuranceCompaniesCenterUrl, GetProvincesUrl, GetCitiesUrl } from '../configUrls';
+import { AddressModel, CenterModel, City, ImageModel, InsuranceCompanyCenterModel, PhoneModel, Pivot, Province, SpecialDoctorModel, SpecialTestCenterModel } from './center-model.component';
+import { ImageUrl, EditCenterUrl, EditHourseOfWorkUrl, GetCentersUrl, PhoneUrl, AddressUrl, SpecialTestsCenterUrl, InsuranceCompaniesCenterUrl, GetProvincesUrl, GetCitiesUrl, SpecialDoctorUrl } from '../configUrls';
 import { DialogService } from '../shared/dialog.service';
 import { AppComponent } from '../app.component';
 import { SpecialTestModel } from '../special-test/special-test-model.component';
@@ -10,6 +10,8 @@ import { InsurranceCompanyModel } from '../insurrance-company/insurrance-company
 import { InsurranceCompanyComponent } from '../insurrance-company/insurrance-company.component';
 import { HoursOfWorkComponent } from '../hours-of-work/hours-of-work.component';
 import { HoursOfWorkModel } from '../hours-of-work/hourse-of-work-model.component';
+import { CenterTypeComponent } from '../center-type/center-type.component';
+import { CenterTypeModel } from '../center-type/center-type-model.component';
 
 @Component({
   selector: 'app-center',
@@ -42,6 +44,7 @@ export class CenterComponent implements OnInit {
          'addresses',
          'special_tests',
          'insurance_companies',
+         'special_doctors',
          'edit',
          'delete',
         //  'updated_at',
@@ -52,7 +55,8 @@ export class CenterComponent implements OnInit {
     private appComponent : AppComponent,
     private specialTestComponent : SpecialTestComponent,
     private insuranceCompanyComponent : InsurranceCompanyComponent,
-    private hoursOfWorkComponent : HoursOfWorkComponent
+    private hoursOfWorkComponent : HoursOfWorkComponent,
+    private centerTypeComponent : CenterTypeComponent
   ) { }
 
   
@@ -63,6 +67,8 @@ showAddressesColumns = false;
 showSpecialTestsColumns = false;
 showInsuranceCompaniesColumns = false;
 showHoursOfWorksColumns = false;
+showSpecialDoctorsColumns = false;
+
 
 
 Provinces : Province[] = [];
@@ -72,9 +78,10 @@ emptyProvince = new Province(0,0,'','');
 emptyCities = new City(0,0,'','');
 
 
-  createCenter = new CenterModel(0, '', '', '', 0, '', 0, 0, 0, '', 0 , 0, '', '' , 'post',false, false, false, false, false,0,0,0,0 ,[],[],this.emptyProvince,this.emptyCities,[],[],[], [],[]);
+  createCenter = new CenterModel(0, '', '', '', 0, '', 0, 0, 0, '', 0 , 0, '', '' , 'post',false, false, false, false, false, false,1,0,0,0 ,[],[],this.emptyProvince,this.emptyCities,[],[],[], [],[], []);
   createPhone = new PhoneModel(0,'','centers','post');
   createAddress = new AddressModel(0,'','','centers','post');
+  createSpecialDoctor = new SpecialDoctorModel(0,'',0,'post');
 
   pivot = new Pivot(0,0,0,0);
   pivot_id : number = 0
@@ -86,6 +93,7 @@ emptyCities = new City(0,0,'','');
   Centers : CenterModel[] = []
   SpecialTests : SpecialTestModel[] = []
   HoursOfWorks : HoursOfWorkModel[] = []
+  CenterTypes : CenterTypeModel[] = []
   InsuranceCompanies : InsurranceCompanyModel[] = []
 
  
@@ -95,6 +103,8 @@ emptyCities = new City(0,0,'','');
     this.specialTestComponent.getSpecialTests();
     this.insuranceCompanyComponent.getInsuranceCompanies();
     this.hoursOfWorkComponent.getHourseOfWorks();
+    this.centerTypeComponent.getCenterTypes();
+  
   }
 
   getProvinces() {
@@ -174,6 +184,8 @@ emptyCities = new City(0,0,'','');
   onEdit(center: CenterModel) {
     center.is_editable = !center.is_editable;
     this.HoursOfWorks = this.hoursOfWorkComponent.HourseOfWorks;
+    this.CenterTypes = this.centerTypeComponent.CenterTypes;
+  
   }
 
   cancelEdit(center: CenterModel) {
@@ -201,6 +213,8 @@ emptyCities = new City(0,0,'','');
 
   showCreateForm() {
     this.createForm = true;
+    this.CenterTypes = this.centerTypeComponent.CenterTypes;
+    this.HoursOfWorks = this.hoursOfWorkComponent.HourseOfWorks;
   }
 
   create(create: CenterModel){
@@ -293,6 +307,7 @@ emptyCities = new City(0,0,'','');
   
   editPhone(elemen:any) {
     elemen.phone_editable = true;
+    
   }
 
   addPhone(phone: PhoneModel, center_id: number) {
@@ -359,6 +374,50 @@ emptyCities = new City(0,0,'','');
 
   }
 
+  deleteSpecialDoctor(special_doctor: any) {
+    this.dialogService.openConfirmDialog().afterClosed().subscribe(
+      res => {
+        if (res) {
+          this.appComponent.loading = true;
+          this.httpClient.delete<any>(SpecialDoctorUrl + '/' + special_doctor.id).subscribe(
+            response => {
+              this.appComponent.loading = false;
+            if (response.success) {
+              this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+              this.getCenters();
+            //  this.CenterTypes = this.appComponent.removeElementFromArray(center, this.CenterTypes); 
+            } else {
+              console.log('fail');
+              this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+            }
+            }
+          );
+        }
+      }
+
+    )
+  }
+  
+  editSpecialDoctor(elemen:any) {
+    elemen.special_doctor_editable = true;
+  }
+
+  addSpecialDoctor(special_doctor: SpecialDoctorModel, center_id: number) {
+    this.appComponent.loading=true;
+    this.httpClient.post<any>(SpecialDoctorUrl + '/' + center_id, special_doctor).subscribe(
+      response => {
+        this.appComponent.loading= false;
+       if (response.success) {
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+       this.getCenters();
+       } else {
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+         console.log('fail');
+       }
+      }
+    );
+
+  }
 
   deleteSpecialTestCenter(specialTestCenterPivot: any) {
     console.log(specialTestCenterPivot);
@@ -474,6 +533,9 @@ emptyCities = new City(0,0,'','');
       break;
       case "insurance_companies": 
       this.showInsuranceCompaniesColumns = !this.showInsuranceCompaniesColumns;
+      break;
+      case "special_doctors": 
+      this.showSpecialDoctorsColumns = !this.showSpecialDoctorsColumns;
       break;
     }
  

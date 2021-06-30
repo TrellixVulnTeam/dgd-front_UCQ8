@@ -3,8 +3,17 @@
       <span>ساخت مرکز جدید</span>
       <mat-icon title="ساخت مرکز جدید"  (click)='showCreateForm()'> library_add </mat-icon>
       </div>
-  
       <div *ngIf='createForm'>
+
+          <mat-form-field>
+            <mat-label>نوع مرکز</mat-label>
+           <mat-select [(ngModel)] = 'createCenter.type_id'>
+             <mat-option *ngFor='let center_type of this.CenterTypes' value='{{center_type.id}}' >
+                 {{ center_type.name }}
+             </mat-option>
+             </mat-select>
+          </mat-form-field>  
+          
       <mat-form-field >
         <mat-label>نام</mat-label>
         <input matInput name='createCenter.name' [(ngModel)] = 'createCenter.name'>
@@ -15,76 +24,93 @@
         <mat-label>سایت</mat-label>
         <input matInput name='createCenter.site' [(ngModel)] = 'createCenter.site' >
       </mat-form-field>
-      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
 
 
       <mat-form-field>
         <mat-label>مسول فنی</mat-label>
         <input matInput name='createCenter.technical_manager_name' [(ngModel)] = 'createCenter.technical_manager_name' >
       </mat-form-field>
-      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
 
 
       <mat-form-field>
         <mat-label>منطقه</mat-label>
         <input matInput name='createCenter.area' [(ngModel)] = 'createCenter.area' >
       </mat-form-field>
-      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+      
 
 
       <mat-form-field>
         <mat-label>نام محل </mat-label>
         <input matInput name='createCenter.area_name' [(ngModel)] = 'createCenter.area_name' >
       </mat-form-field>
-      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+      
 
       <mat-form-field>
         <mat-label>تخفیف </mat-label>
         <input matInput name='createCenter.discount' [(ngModel)] = 'createCenter.discount' >
       </mat-form-field>
-      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+      
 
       <mat-form-field>
         <mat-label> رضایت مندی </mat-label>
         <input matInput name='createCenter.satisfaction' [(ngModel)] = 'createCenter.satisfaction' >
       </mat-form-field>
-      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
-
-
+      
       <mat-form-field>
-        <mat-label> ساعت کاری </mat-label>
-        <input matInput name='createCenter.hours_of_work_id' [(ngModel)] = 'createCenter.hours_of_work_id' >
-      </mat-form-field>
-      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+        <mat-select [(ngModel)] = 'createCenter.hours_of_work_id'>
+          <mat-option *ngFor='let hours_of_work of this.HoursOfWorks' value='{{hours_of_work.id}}' >
+              {{ hours_of_work.id }}
+          </mat-option>
+          </mat-select>
+       </mat-form-field> 
+      
 
       <mat-form-field>
         <mat-label> حالت مرکز </mat-label>
         <input matInput name='createCenter.governmental_type' [(ngModel)] = 'createCenter.governmental_type' >
       </mat-form-field>
-      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+      
 
       <mat-form-field>
         <mat-label> عرض جغرافیایی </mat-label>
         <input matInput name='createCenter.latitude' [(ngModel)] = 'createCenter.latitude' >
       </mat-form-field>
-      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+      
 
       <mat-form-field>
         <mat-label> طول جغرافیایی </mat-label>
         <input matInput name='createCenter.longitude' [(ngModel)] = 'createCenter.longitude' >
       </mat-form-field>
-      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
+      
 
       <mat-form-field>
         <mat-label> لوگو</mat-label>
         <input matInput name='createCenter.logo' [(ngModel)] = 'createCenter.logo' >
       </mat-form-field>
+
+      <mat-form-field>
+        <mat-label> استان</mat-label>
+        <mat-select [(ngModel)] = 'createCenter.province_id'  (selectionChange)="getCities(createCenter.province_id)">
+          <mat-option  *ngFor='let province of this.Provinces' value='{{province.id}}'> 
+          {{ province.name }}
+          </mat-option>
+          </mat-select>
+       </mat-form-field> 
+
+       <mat-form-field>
+        <mat-label> شهر</mat-label>
+        <mat-select [(ngModel)] = 'createCenter.city_id'>
+          <mat-option  *ngFor='let city of this.Cities' value='{{city.id}}' > 
+          {{ city.name }}
+          </mat-option>
+          </mat-select>
+       </mat-form-field>  
       <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
     </div>
      
   
   
-     <h1>{{ title }}</h1>
+   <h1>{{ title }}</h1>
   <table mat-table [dataSource]="Centers" class="mat-elevation-z8">
   
     <ng-container matColumnDef="id">
@@ -94,18 +120,22 @@
   
 
     <ng-container matColumnDef="center_type">
-        <th mat-header-cell *matHeaderCellDef>  نوع مرکز </th>
-          <td  mat-cell *matCellDef="let element"> 
-            <span *ngIf = '!element.is_editable'>
-              {{element.center_type.name}} 
-            </span>    
-            <div *ngIf ='element.is_editable'>
-              <mat-form-field>
-                <input matInput type="text"  name={{element.center_type.name}}  [(ngModel)] = 'element.center_type.name'>
-              </mat-form-field>
-             </div>
-          </td>
-      </ng-container>
+      <th mat-header-cell *matHeaderCellDef>  نوع مرکز</th>  
+      <td  mat-cell *matCellDef="let element"> 
+        <div *ngIf='!element.is_editable'>
+          {{element.center_type.name}}  
+        </div>    
+        <div *ngIf='element.is_editable'>
+        <mat-form-field>
+         <mat-select [(ngModel)] = 'element.type_id' [(ngModel)] = 'element.center_type.name'>
+           <mat-option *ngFor='let center_type of this.CenterTypes' value='{{center_type.id}}' >
+               {{ center_type.name }}
+           </mat-option>
+           </mat-select>
+        </mat-form-field>  
+      </div>
+    </td>
+    </ng-container>
 
     
     <ng-container matColumnDef="name">
@@ -484,6 +514,33 @@
 
       <div *ngIf='!showInsuranceCompaniesColumns'>
         <mat-icon class="delete-phone" (click)="toggleColumn('insurance_companies')">remove_red_eye</mat-icon>
+      </div>
+      </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="special_doctors">
+        <th mat-header-cell *matHeaderCellDef>  دکترهای مرکز  <mat-icon class="delete-phone" (click)="toggleColumn('special_doctors')">remove_red_eye</mat-icon></th>  
+        <td  mat-cell *matCellDef="let element"> 
+          <div *ngIf='showSpecialDoctorsColumns'>
+            <div *ngFor="let special_doctor of element.special_doctors"> 
+            <span>
+              {{special_doctor.name}}              
+            </span> 
+            <mat-icon class="delete-phone" title='پاک کردن دکتز'  (click) = 'deleteSpecialDoctor(special_doctor)'>close</mat-icon>
+            <br>
+          </div> 
+          <mat-icon title='اضافه کردن دکتر' (click)="editSpecialDoctor(element)">add</mat-icon>
+          <div *ngIf='element.special_doctor_editable'>
+          <mat-form-field>
+            <input matInput name='createSpecialDoctor.name' [(ngModel)] = 'createSpecialDoctor.name' placeholder="نام دکتر">
+          </mat-form-field>  
+          <mat-icon class="delete-phone" (click)="addSpecialDoctor(createSpecialDoctor, element.id)">check</mat-icon>
+        </div>
+      </div>
+
+      <div *ngIf='!showSpecialDoctorsColumns'>
+        <mat-icon class="delete-phone" (click)="toggleColumn('special_doctors')">remove_red_eye</mat-icon>
       </div>
       </td>
       </ng-container>

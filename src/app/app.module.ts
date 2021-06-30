@@ -78,7 +78,7 @@ const routes: Routes = [
     MatSnackBarModule,
     
   ],
-  providers: [SpecialTestComponent, InsurranceCompanyComponent, HoursOfWorkComponent],
+  providers: [SpecialTestComponent, InsurranceCompanyComponent, HoursOfWorkComponent, CenterTypeComponent],
   bootstrap: [AppComponent],
   entryComponents:[MatConfirmDialogComponent]
 })
