@@ -38,4 +38,12 @@ export const SpecialTestsCenterUrl = BaseUrl + 'special_test_center'
 export const InsuranceCompaniesCenterUrl = BaseUrl + 'insurance_company_center'
 
 
- 
+
+// doctors
+
+export const GetDoctorsUrl =  BaseUrl + 'doctors'
+export const EditDoctorUrl =  BaseUrl + 'doctor'
+
+
+export const SpecialtyDoctorUrl = BaseUrl + 'doctor_specialty'
+

@@ -1,1 +1,480 @@
-<p>doctor works!</p>
+<div class="container">
+    <div class="create-new">
+      <span>ساخت دکتر جدید</span>
+      <mat-icon title="ساخت دکتر جدید"  (click)='showCreateForm()'> library_add </mat-icon>
+      </div>
+      <div *ngIf='createForm'>
+      
+      <mat-form-field >
+        <mat-label>نام</mat-label>
+        <input matInput name='createDoctor.name' [(ngModel)] = 'createDoctor.name'>
+      </mat-form-field>
+     
+      <mat-form-field>
+        <mat-label>سایت</mat-label>
+        <input matInput name='createDoctor.site' [(ngModel)] = 'createDoctor.site' >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>شماره سیستمی</mat-label>
+        <input matInput name='createDoctor.system_medicine_number' [(ngModel)] = 'createDoctor.system_medicine_number' >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>سابقه کار</mat-label>
+        <input matInput name='createDoctor.work_experience' [(ngModel)] = 'createDoctor.work_experience' >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label> دارای مطب</mat-label>
+            <mat-select [(ngModel)] = 'createDoctor.has_office'>
+              <mat-option  value='1' >
+                 دارد
+              </mat-option>
+              <mat-option  value='0' >
+               ندارد
+            </mat-option>
+              </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>منطقه</mat-label>
+        <input matInput name='createDoctor.area' [(ngModel)] = 'createDoctor.area' >
+      </mat-form-field>
+      
+
+      <mat-form-field>
+        <mat-label>نام محل </mat-label>
+        <input matInput name='createDoctor.area_name' [(ngModel)] = 'createDoctor.area_name' >
+      </mat-form-field>
+            
+
+      <mat-form-field>
+        <mat-label> رضایت مندی </mat-label>
+        <input matInput name='createDoctor.satisfaction' [(ngModel)] = 'createDoctor.satisfaction' >
+      </mat-form-field>
+      
+
+      <mat-form-field>
+        <mat-label> عرض جغرافیایی </mat-label>
+        <input matInput name='createDoctor.latitude' [(ngModel)] = 'createDoctor.latitude' >
+      </mat-form-field>
+      
+
+      <mat-form-field>
+        <mat-label> طول جغرافیایی </mat-label>
+        <input matInput name='createDoctor.longitude' [(ngModel)] = 'createDoctor.longitude' >
+      </mat-form-field>
+      
+
+      <mat-form-field>
+        <mat-label> استان</mat-label>
+        <mat-select [(ngModel)] = 'createDoctor.province_id'  (selectionChange)="getCities(createDoctor.province_id)">
+          <mat-option  *ngFor='let province of this.Provinces' value='{{province.id}}'> 
+          {{ province.name }}
+          </mat-option>
+          </mat-select>
+       </mat-form-field> 
+
+       <mat-form-field>
+        <mat-label> شهر</mat-label>
+        <mat-select [(ngModel)] = 'createDoctor.city_id'>
+          <mat-option  *ngFor='let city of this.Cities' value='{{city.id}}' > 
+          {{ city.name }}
+          </mat-option>
+          </mat-select>
+       </mat-form-field> 
+       
+       <mat-form-field>
+        <mat-label> دانشگاه</mat-label>
+        <mat-select [(ngModel)] = 'createDoctor.college_id'>
+          <mat-option  *ngFor='let college of this.Colleges' value='{{college.id}}' > 
+          {{ college.name }}
+          </mat-option>
+          </mat-select>
+       </mat-form-field> 
+
+      <mat-icon title= 'ایجاد' class="black-color" (click)='create(createDoctor)'> check </mat-icon>
+    </div>
+
+ 
+   <h1>{{ title }}</h1>
+  <table mat-table [dataSource]="Doctors" class="mat-elevation-z8">
+  
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> شماره </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+ 
+   
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> نام </th>
+      <td mat-cell *matCellDef="let element">  
+        <span *ngIf = '!element.is_editable'>
+          {{element.name}} 
+        </span>    
+        <div *ngIf ='element.is_editable'>
+          <mat-form-field>
+            <input matInput type="text"  name={{element.name}}  [(ngModel)] = 'element.name'>
+          </mat-form-field>
+         </div>
+      </td>
+    </ng-container>
+  
+    
+    <ng-container matColumnDef="site">
+      <th mat-header-cell *matHeaderCellDef>  سایت </th>
+        <td  mat-cell *matCellDef="let element"> 
+          <span *ngIf = '!element.is_editable'>
+            {{element.site}} 
+          </span>    
+          <div *ngIf ='element.is_editable'>
+            <mat-form-field>
+              <input matInput type="text"  name={{element.site}}  [(ngModel)] = 'element.site'>
+            </mat-form-field>
+           </div>
+        </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="system_medicine_number">
+        <th mat-header-cell *matHeaderCellDef>  شماره سیستمی </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.system_medicine_number}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.system_medicine_number}}  [(ngModel)] = 'element.system_medicine_number'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="work_experience">
+        <th mat-header-cell *matHeaderCellDef> سابقه کار  </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.work_experience}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.work_experience}}  [(ngModel)] = 'element.work_experience'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="has_office">
+        <th mat-header-cell *matHeaderCellDef>داری مطب </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{ element.has_office === '1' ? 'خیر' : 'بله ' }}        
+            </span> 
+             <div *ngIf='element.is_editable'>
+              <mat-form-field>
+               <mat-select [(ngModel)] = 'element.has_office'>
+                 <mat-option  value='1' >
+                    دارد
+                 </mat-option>
+                 <mat-option  value='0' >
+                  ندارد
+               </mat-option>
+                 </mat-select>
+              </mat-form-field>  
+            </div>
+          </td>
+      </ng-container>
+
+      
+
+      <ng-container matColumnDef="area">
+        <th mat-header-cell *matHeaderCellDef> منطقه </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.area}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.area}}  [(ngModel)] = 'element.area'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="area_name">
+        <th mat-header-cell *matHeaderCellDef> نام محل</th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.area_name}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.area_name}}  [(ngModel)] = 'element.area_name'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+      
+      <ng-container matColumnDef="satisfaction">
+        <th mat-header-cell *matHeaderCellDef> رضایت مندی </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.satisfaction}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.satisfaction}}  [(ngModel)] = 'element.satisfaction'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="latitude">
+        <th mat-header-cell *matHeaderCellDef> عرض جغرافیایی </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.latitude}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.latitude}}  [(ngModel)] = 'element.latitude'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="longitude">
+        <th mat-header-cell *matHeaderCellDef> طول جغرافیایی </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.longitude}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.longitude}}  [(ngModel)] = 'element.longitude'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="country">
+        <th mat-header-cell *matHeaderCellDef>  کشور </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.country.name}} 
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <input matInput type="text"  name={{element.country.name}}  [(ngModel)] = 'element.country.name'>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="province">
+        <th mat-header-cell *matHeaderCellDef>  استان </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.province.name}} 
+            </span>    
+             <div *ngIf='element.is_editable'>
+              <mat-form-field>
+               <mat-select [(ngModel)] = 'element.province_id' [(ngModel)] = 'element.province.name' (selectionChange)="getCities(element.province_id)">
+                 <mat-option  *ngFor='let province of this.Provinces' value='{{province.id}}'> 
+                 {{ province.name }}
+                 </mat-option>
+                 </mat-select>
+              </mat-form-field>  
+            </div>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef>  شهر </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.city.name}} 
+            </span>  
+            <div *ngIf='element.is_editable'>
+              <mat-form-field>
+               <mat-select [(ngModel)] = 'element.city_id' [(ngModel)] = 'element.city.name'>
+                 <mat-option  *ngFor='let city of this.Cities' value='{{city.id}}' > 
+                 {{ city.name }}
+                 </mat-option>
+                 </mat-select>
+              </mat-form-field>  
+            </div>  
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="college">
+        <th mat-header-cell *matHeaderCellDef>  دانشگاه </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              <span *ngIf= 'element.college'>
+                {{element.college.name}} 
+              </span> 
+              <span *ngIf= '!element.college'>
+               بدون دانشگاه
+              </span> 
+            </span>  
+            <div *ngIf='element.is_editable'>
+              <mat-form-field>
+               <mat-select [(ngModel)] = 'element.college_id'>
+                 <mat-option  *ngFor='let college of this.Colleges' value='{{college.id}}' > 
+                 {{ college.name}}
+                 </mat-option>
+                 </mat-select>
+              </mat-form-field>  
+            </div>  
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="images">
+        <th mat-header-cell *matHeaderCellDef>  عکسهای دکتر  <mat-icon  class="delete-phone"   (click)="toggleColumn('images')">remove_red_eye</mat-icon> </th>
+          <td  mat-cell *matCellDef="let element"> 
+         <div *ngIf='showImagesColumns'>
+            <div *ngFor="let image of element.images"> 
+            <a   href="{{image.path}}">
+              {{image.path}} 
+            </a> 
+            <mat-icon title='پاک کردن عکس'  (click) = 'deleteImage(image)'>close</mat-icon>
+          </div>  
+          <label>
+            <input type="file" (change)="addImage(element.id, $event)" style="display:none" multiple/>
+            <a mat-raised-button color="primary">
+              <mat-icon>file_upload</mat-icon>
+             آپلود عکس
+            </a>
+          </label>   
+        </div>
+        <div *ngIf='!showImagesColumns'>
+          <mat-icon (click)="toggleColumn('images')">remove_red_eye</mat-icon>
+        </div>     
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="phones">
+        <th mat-header-cell *matHeaderCellDef>  تلفنهای دکتر <mat-icon class="delete-phone" (click)="toggleColumn('phones')">remove_red_eye</mat-icon>  </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <div *ngIf='showPhoneColumns'>
+            <div *ngFor="let phone of element.phones"> 
+            <span>
+              {{phone.phone}} 
+            </span> 
+            <mat-icon class="delete-phone" title='پاک کردن تلفن'  (click) = 'deletePhone(phone)'>close</mat-icon>
+            <br>
+          </div> 
+          <mat-icon title='اضافه کردن تلفن' (click)="editPhone(element)">add</mat-icon>
+          <div *ngIf='element.phone_editable'>
+          <mat-form-field>
+            <input matInput name='createPhone.phone' [(ngModel)] = 'createPhone.phone' placeholder="تلفن">
+          </mat-form-field>  
+          <mat-icon class="delete-phone" (click)="addPhone(createPhone, element.id)">check</mat-icon>
+        </div>
+      </div>
+      <div *ngIf='!showPhoneColumns'><mat-icon (click)="toggleColumn('phones')">remove_red_eye</mat-icon></div>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="addresses">
+        <th mat-header-cell *matHeaderCellDef>  آدرسهای دکتر  <mat-icon class="delete-phone" (click)="toggleColumn('addresses')">remove_red_eye</mat-icon></th>  
+        <td  mat-cell *matCellDef="let element"> 
+          <div *ngIf='showAddressesColumns'>
+            <div *ngFor="let address of element.addresses"> 
+            <span>
+              {{address.address}}  
+              'محله:' {{ address.neighbourhood}}
+            </span> 
+            <mat-icon class="delete-phone" title='پاک کردن آٔٔدرس'  (click) = 'deleteAddress(address)'>close</mat-icon>
+            <br>
+          </div> 
+          <mat-icon title='اضافه کردن آدرس' (click)="editAddress(element)">add</mat-icon>
+          <div *ngIf='element.address_editable'>
+          <mat-form-field>
+            <input matInput name='createAddress.address' [(ngModel)] = 'createAddress.address' placeholder="آٔدرس">
+          </mat-form-field>  
+          <mat-form-field>
+          <input matInput name='createAddress.neighbourhood' [(ngModel)] = 'createAddress.neighbourhood' placeholder="محله">
+        </mat-form-field>
+          <mat-icon class="delete-phone" (click)="addAddress(createAddress, element.id)">check</mat-icon>
+        </div>
+      </div>
+
+      <div *ngIf='!showAddressesColumns'>
+        <mat-icon class="delete-phone" (click)="toggleColumn('addresses')">remove_red_eye</mat-icon>
+      </div>
+      </td>
+      </ng-container>
+
+      <ng-container matColumnDef="specialties">
+        <th mat-header-cell *matHeaderCellDef>  تخصص های دکتر  <mat-icon class="delete-phone" (click)="toggleColumn('specialties')">remove_red_eye</mat-icon></th>  
+        <td  mat-cell *matCellDef="let element"> 
+          <div *ngIf='showSpecialtiesColumns'>
+            <div *ngFor="let specialty of element.specialties"> 
+            <span>
+              {{specialty.name}}  
+            </span> 
+            <mat-icon class="delete-phone" title='پاک کردن تخصص '  (click) = 'deleteSpecialtyDoctor(specialty.pivot)'>close</mat-icon>
+            <br>
+          </div> 
+          <mat-icon title='اضافه کردن تخصص ' (click)="editSpecialtyDoctor(element)">add</mat-icon>
+          <div *ngIf='element.specialty_doctor_editable'>
+          <mat-form-field>
+           <mat-select [(ngModel)] = 'pivot_id'>
+             <mat-option *ngFor='let specialty of this.Specialties' value='{{ specialty.id}}' >
+                 {{ specialty.name }}
+             </mat-option>
+             </mat-select>
+          </mat-form-field>  
+          <mat-icon class="delete-phone" (click)="addSpecialtyDoctor(pivot_id, element.id)">check</mat-icon>
+        </div>
+      </div>
+
+      <div *ngIf='!showSpecialtiesColumns'>
+        <mat-icon class="delete-phone" (click)="toggleColumn('specialties')">remove_red_eye</mat-icon>
+      </div>
+      </td>
+      </ng-container>
+  
+    
+    <ng-container matColumnDef="updated_at">
+      <th mat-header-cell *matHeaderCellDef> تاریخ ساخت </th>
+      <td mat-cell *matCellDef="let element"> {{element.updated_at}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef> تغییر </th>
+       <td mat-cell *matCellDef="let element" id= {{element.id}}> 
+         <div *ngIf='!element.is_editable'>
+          <mat-icon (click)='onEdit(element)'> edit </mat-icon>
+         </div>
+         <div *ngIf='element.is_editable'>
+          <mat-icon (click)='update(element)'> check </mat-icon>
+         </div>
+       </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> حذف </th>
+      <td mat-cell *matCellDef="let element" id= {{element.id}} >
+        <div *ngIf='!element.is_editable'>
+         <mat-icon (click)='onDelete(element)'> delete </mat-icon> 
+        </div>
+        <div *ngIf='element.is_editable'>
+          <mat-icon (click)='cancelEdit(element)'> cancel </mat-icon> 
+        </div>
+        </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
