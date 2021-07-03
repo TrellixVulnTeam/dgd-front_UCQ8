@@ -27,7 +27,7 @@
 
       <mat-form-field>
         <mat-label> دارای مطب</mat-label>
-            <mat-select [(ngModel)] = 'createDoctor.has_office'>
+            <mat-select [(ngModel)] = 'createDoctor.has_office' [(value)] = 'createDoctor.has_office'>
               <mat-option  value='1' >
                  دارد
               </mat-option>

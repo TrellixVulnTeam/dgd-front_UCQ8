@@ -7,7 +7,7 @@
 
           <mat-form-field>
             <mat-label>نوع مرکز</mat-label>
-           <mat-select [(ngModel)] = 'createCenter.type_id'>
+           <mat-select [(ngModel)] = 'createCenter.type_id' [(value)]="createCenter.type_id">
              <mat-option *ngFor='let center_type of this.CenterTypes' value='{{center_type.id}}' >
                  {{ center_type.name }}
              </mat-option>
@@ -57,7 +57,8 @@
       </mat-form-field>
       
       <mat-form-field>
-        <mat-select [(ngModel)] = 'createCenter.hours_of_work_id'>
+        <mat-label> شماره ی ساعت کاری </mat-label>
+        <mat-select [(ngModel)] = 'createCenter.hours_of_work_id' [(value)]="createCenter.hours_of_work_id">
           <mat-option *ngFor='let hours_of_work of this.HoursOfWorks' value='{{hours_of_work.id}}' >
               {{ hours_of_work.id }}
           </mat-option>
@@ -67,7 +68,14 @@
 
       <mat-form-field>
         <mat-label> حالت مرکز </mat-label>
-        <input matInput name='createCenter.governmental_type' [(ngModel)] = 'createCenter.governmental_type' >
+        <mat-select [(ngModel)] = 'createCenter.governmental_type'>
+          <mat-option  value='governmental' >
+             دولتی
+          </mat-option>
+          <mat-option  value='private' >
+           خصوصی
+        </mat-option>
+          </mat-select>
       </mat-form-field>
       
 
@@ -90,7 +98,7 @@
 
       <mat-form-field>
         <mat-label> استان</mat-label>
-        <mat-select [(ngModel)] = 'createCenter.province_id'  (selectionChange)="getCities(createCenter.province_id)">
+        <mat-select [(ngModel)] = 'createCenter.province_id'  (selectionChange)="getCities(createCenter.province_id)" [(value)]="createCenter.province_id">
           <mat-option  *ngFor='let province of this.Provinces' value='{{province.id}}'> 
           {{ province.name }}
           </mat-option>
@@ -99,7 +107,7 @@
 
        <mat-form-field>
         <mat-label> شهر</mat-label>
-        <mat-select [(ngModel)] = 'createCenter.city_id'>
+        <mat-select [(ngModel)] = 'createCenter.city_id' [(value)]="createCenter.city_id" >
           <mat-option  *ngFor='let city of this.Cities' value='{{city.id}}' > 
           {{ city.name }}
           </mat-option>

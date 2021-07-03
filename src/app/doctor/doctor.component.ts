@@ -8,6 +8,7 @@ import { SpecialtyModel } from '../specialty/specialty-model.component';
 import { SpecialtyComponent } from '../specialty/specialty.component';
 import { CollegeComponent } from '../college/college.component';
 import { CollegeModel } from '../college/college-model.component';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-center',
@@ -63,17 +64,17 @@ Provinces : Province[] = [];
 Cities : City[] = [];
 Colleges : CollegeModel[] = [];
 
-emptyProvince = new Province(0,0,'','');
-emptyCities = new City(0,0,'','');
+emptyProvince = new Province(32,1,'','');
+emptyCities = new City(473,32,'','');
 emptyCollege = new College(0,'','');
 
 
-  createDoctor = new DoctorModel(0, '', '', 0, 0, 1, 1, 1, 0, 0, '', 0, 0, 0, '', 'post', false, false,false, false , false, [] , this.emptyProvince, this.emptyCities, this.emptyCollege,[],[],[], []);
+  createDoctor = new DoctorModel(0, '', '', 0, 0, 1, 32, 473, null, 0, '', 0, 0, 0, '', 'post', false, false,false, false , false, [] , this.emptyProvince, this.emptyCities, this.emptyCollege,[],[],[], []);
   createPhone = new PhoneModel(0,'','doctors','post');
   createAddress = new AddressModel(0,'','','doctors','post');
   createSpecialty = new SpecialtyModel(0,'', '', '','post',false);
 
-  pivot = new Pivot(0,0,0);
+  pivot = new Pivot(0,null,0);
   pivot_id : number = 0
   createSpecialties = new SpecialtyDoctorModel(0, '', '', '', this.pivot);
   
@@ -228,16 +229,18 @@ emptyCollege = new College(0,'','');
 
   create(create: DoctorModel){
     this.appComponent.loading=true;
-    this.httpClient.post<any>(EditDoctorUrl, create).subscribe(
+    this.httpClient.post<any>(EditDoctorUrl, create).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
       response => {
         this.appComponent.loading= false;
-       if (response.success) {
+       if (response.success == true) {
         this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
         this.createForm =false;
        this.getDoctors();
-       } else {
-        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
-         console.log('fail');
+       } else  if (response.success == false){
+        console.log(response.message);
+        this.appComponent.openSnackBar(response.message,'ok');
        }
       }
     );
@@ -322,15 +325,16 @@ emptyCollege = new College(0,'','');
   addPhone(phone: PhoneModel, doctor_id: number) {
     console.log(phone);
     this.appComponent.loading=true;
-    this.httpClient.post<any>(PhoneUrl + '/' + doctor_id, phone).subscribe(
+    this.httpClient.post<any>(PhoneUrl + '/' + doctor_id, phone).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
       response => {
         this.appComponent.loading= false;
        if (response.success) {
         this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
        this.getDoctors();
        } else {
-        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
-         console.log('fail');
+      
        }
       }
     );
@@ -368,15 +372,16 @@ emptyCollege = new College(0,'','');
 
   addAddress(address: AddressModel, doctor_id: number) {
     this.appComponent.loading=true;
-    this.httpClient.post<any>(AddressUrl + '/' + doctor_id, address).subscribe(
+    this.httpClient.post<any>(AddressUrl + '/' + doctor_id, address).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
       response => {
         this.appComponent.loading= false;
        if (response.success) {
         this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
        this.getDoctors();
        } else {
-        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
-         console.log('fail');
+       
        }
       }
     );
@@ -414,17 +419,21 @@ emptyCollege = new College(0,'','');
   }
 
   addSpecialtyDoctor(specialty_doctor_id: number, doctor_id: number) {
-    this.pivot.specialty_id = specialty_doctor_id;
+    if (specialty_doctor_id != 0) {
+      this.pivot.specialty_id = specialty_doctor_id;
+    }
+    
     this.appComponent.loading=true;
-    this.httpClient.post<any>(SpecialtyDoctorUrl + '/' + doctor_id, this.pivot).subscribe(
+    this.httpClient.post<any>(SpecialtyDoctorUrl + '/' + doctor_id, this.pivot).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
       response => {
         this.appComponent.loading= false;
        if (response.success) {
         this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
        this.getDoctors();
        } else {
-        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
-         console.log('fail');
+        
        }
       }
     );

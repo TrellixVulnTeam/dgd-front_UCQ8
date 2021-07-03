@@ -12,6 +12,7 @@ import { HoursOfWorkComponent } from '../hours-of-work/hours-of-work.component';
 import { HoursOfWorkModel } from '../hours-of-work/hourse-of-work-model.component';
 import { CenterTypeComponent } from '../center-type/center-type.component';
 import { CenterTypeModel } from '../center-type/center-type-model.component';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-center',
@@ -74,16 +75,16 @@ showSpecialDoctorsColumns = false;
 Provinces : Province[] = [];
 Cities : City[] = [];
 
-emptyProvince = new Province(0,0,'','');
-emptyCities = new City(0,0,'','');
+emptyProvince = new Province(32,1,'',''); //  defult no provicne with id= 32
+emptyCities = new City(473,32,'','');//  defult no city with id= 473
 
 
-  createCenter = new CenterModel(0, '', '', '', 0, '', 0, 0, 0, '', 0 , 0, '', '' , 'post',false, false, false, false, false, false,1,0,0,0 ,[],[],this.emptyProvince,this.emptyCities,[],[],[], [],[], []);
+  createCenter = new CenterModel(0, '', '', '', 0, '', 0, 0, null, 'private', 0 , 0, '', '' , 'post',false, false, false, false, false, false,1,32,473,null ,[],[],this.emptyProvince,this.emptyCities,[],[],[], [],[], []);
   createPhone = new PhoneModel(0,'','centers','post');
   createAddress = new AddressModel(0,'','','centers','post');
   createSpecialDoctor = new SpecialDoctorModel(0,'',0,'post');
 
-  pivot = new Pivot(0,0,0,0);
+  pivot = new Pivot(0,null,null,0);
   pivot_id : number = 0
   createSpecialTests = new SpecialTestCenterModel(0, '', '', '', this.pivot);
   createInsuranceCompanies = new InsuranceCompanyCenterModel(0, '', '', 'post', this.pivot, '');
@@ -122,7 +123,7 @@ emptyCities = new City(0,0,'','');
     );
   }
 
-  getCities(province_id: number) {
+  getCities(province_id: number | null) {
   console.log(22);
     this.httpClient.get<any>(GetCitiesUrl + '/' + province_id).subscribe(
       response => {
@@ -211,31 +212,8 @@ emptyCities = new City(0,0,'','');
     );
   }
 
-  // update(center: CenterModel) {
-  //   console.log(22);
-  //   center._method = "put";
-  //   this.appComponent.loading=true;
-  //   this.httpClient.post<any>(EditCenterUrl + '/' + center.id, center).pipe(
+ 
 
-  //     tap(response => console.log(22)),
-  //     catchError(this.handleError<any[]>('getHeroes', [])),
-
-
-  //   ).subscribe(
-  //     Response => {
-  //       console.log(Response);
-  //     }
-  //   );
-  // }
-
-  // private handleError<T>(operation = 'operation', result?: T) {
-  //   return (error: any): Observable<T> => {
-  //     // Let the app keep running by returning an empty result.
-  //     console.log(error);
-  //     this.appComponent.loading =false;
-  //     return of(result as T);
-  //   };
-  // }
 
   showCreateForm() {
     this.createForm = true;
@@ -245,16 +223,20 @@ emptyCities = new City(0,0,'','');
 
   create(create: CenterModel){
     this.appComponent.loading=true;
-    this.httpClient.post<any>(EditCenterUrl, create).subscribe(
+    this.httpClient.post<any>(EditCenterUrl, create).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
       response => {
+        console.log(response);
         this.appComponent.loading= false;
-       if (response.success) {
+       if (response.success == true) {
         this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
         this.createForm =false;
        this.getCenters();
-       } else {
-        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
-         console.log('fail');
+       } 
+        if (response.success == false) {
+        console.log(response.message);
+        this.appComponent.openSnackBar(response.message,'ok');
        }
       }
     );
@@ -339,15 +321,16 @@ emptyCities = new City(0,0,'','');
   addPhone(phone: PhoneModel, center_id: number) {
     console.log(phone);
     this.appComponent.loading=true;
-    this.httpClient.post<any>(PhoneUrl + '/' + center_id, phone).subscribe(
+    this.httpClient.post<any>(PhoneUrl + '/' + center_id, phone).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
       response => {
         this.appComponent.loading= false;
        if (response.success) {
         this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
        this.getCenters();
        } else {
-        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
-         console.log('fail');
+  
        }
       }
     );
@@ -385,15 +368,16 @@ emptyCities = new City(0,0,'','');
 
   addAddress(address: AddressModel, center_id: number) {
     this.appComponent.loading=true;
-    this.httpClient.post<any>(AddressUrl + '/' + center_id, address).subscribe(
+    this.httpClient.post<any>(AddressUrl + '/' + center_id, address).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
       response => {
         this.appComponent.loading= false;
        if (response.success) {
         this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
        this.getCenters();
        } else {
-        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
-         console.log('fail');
+       
        }
       }
     );
@@ -430,15 +414,16 @@ emptyCities = new City(0,0,'','');
 
   addSpecialDoctor(special_doctor: SpecialDoctorModel, center_id: number) {
     this.appComponent.loading=true;
-    this.httpClient.post<any>(SpecialDoctorUrl + '/' + center_id, special_doctor).subscribe(
+    this.httpClient.post<any>(SpecialDoctorUrl + '/' + center_id, special_doctor).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
       response => {
         this.appComponent.loading= false;
        if (response.success) {
         this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
        this.getCenters();
        } else {
-        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
-         console.log('fail');
+      
        }
       }
     );
@@ -476,18 +461,21 @@ emptyCities = new City(0,0,'','');
   }
 
   addSpecialTestCenter(special_test_center_id: number, center_id: number) {
-    console.log(special_test_center_id, center_id);
-    this.pivot.special_test_id = special_test_center_id;
+   
+    if(special_test_center_id != 0) {
+      this.pivot.special_test_id = special_test_center_id;
+    }
     this.appComponent.loading=true;
-    this.httpClient.post<any>(SpecialTestsCenterUrl + '/' + center_id, this.pivot).subscribe(
+    this.httpClient.post<any>(SpecialTestsCenterUrl + '/' + center_id, this.pivot).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
       response => {
         this.appComponent.loading= false;
        if (response.success) {
         this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
        this.getCenters();
        } else {
-        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
-         console.log('fail');
+        
        }
       }
     );
@@ -525,17 +513,21 @@ emptyCities = new City(0,0,'','');
 
   addInsuranceCompanyCenter(insurance_company_center_id: number, center_id: number) {
   
-    this.pivot.insurance_company_id = insurance_company_center_id;
+    if (insurance_company_center_id != 0) {
+      this.pivot.insurance_company_id = insurance_company_center_id;
+    }
+    
     this.appComponent.loading=true;
-    this.httpClient.post<any>(InsuranceCompaniesCenterUrl + '/' + center_id, this.pivot).subscribe(
+    this.httpClient.post<any>(InsuranceCompaniesCenterUrl + '/' + center_id, this.pivot).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
       response => {
         this.appComponent.loading= false;
        if (response.success) {
         this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
        this.getCenters();
        } else {
-        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
-         console.log('fail');
+    
        }
       }
     );

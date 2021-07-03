@@ -8,7 +8,7 @@ export class CenterModel {
         public area_name :string,
         public discount :number,
         public satisfaction :number,
-        public hours_of_work_id :number,
+        public hours_of_work_id :number | null,
         public governmental_type :string,
         public latitude :number,
         public longitude :number,
@@ -23,10 +23,10 @@ export class CenterModel {
         public insurance_company_center_editable :boolean,
         public special_doctor_editable :boolean,
 
-        public country_id : number,
-        public province_id : number,
-        public city_id : number,
-        public type_id : number,
+        public country_id : number | null,
+        public province_id : number | null,
+        public city_id : number | null,
+        public type_id : number | null,
 
         public center_type: CenterType,
         public country: Country,
@@ -169,8 +169,8 @@ export class SpecialDoctorModel {
 export class Pivot {
     constructor(
       public  id : number,
-      public  special_test_id : number,
-      public  insurance_company_id : number,
+      public  special_test_id : number | null,
+      public  insurance_company_id : number | null,
       public  center_id : number,
     ) {
 

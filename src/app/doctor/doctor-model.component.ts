@@ -8,7 +8,7 @@ export class DoctorModel {
         public country_id : number,
         public province_id : number,
         public city_id : number,
-        public college_id : number,
+        public college_id : number | null,
         public area :number,
         public area_name :string,
         
@@ -134,7 +134,7 @@ export class SpecialtyDoctorModel {
 export class Pivot {
     constructor(
       public  id : number,
-      public  specialty_id : number,
+      public  specialty_id : number | null,
       public  doctor_id : number,
     ) {
 
