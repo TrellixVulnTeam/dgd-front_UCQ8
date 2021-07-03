@@ -76,11 +76,18 @@
         <th mat-header-cell *matHeaderCellDef> نوع بیمه  </th>
           <td  mat-cell *matCellDef="let element"> 
             <span *ngIf = '!element.is_editable'>
-              {{element.type}} 
+              {{ element.type === 'supplementary' ? 'دولتی' : 'خصوصی ' }}        
             </span>    
             <div *ngIf ='element.is_editable'>
               <mat-form-field>
-                <input matInput type="text"  name={{element.type}}  [(ngModel)] = 'element.type'>
+                <mat-select [(ngModel)] = 'element.type'>
+                  <mat-option  value='supplementary' >
+                     دولتی
+                  </mat-option>
+                  <mat-option  value='normal' >
+                   خصوصی
+                </mat-option>
+                  </mat-select>
               </mat-form-field>
              </div>
           </td>

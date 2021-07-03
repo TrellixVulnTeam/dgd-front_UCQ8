@@ -4,6 +4,7 @@ import { CenterTypeModel, DeleteCenterTypeModel } from './center-type-model.comp
 import { CreateCenterTypeUrl, DeleteCenterTypeUrl, EditCenterTypeUrl, GetCenterTypesUrl } from '../configUrls';
 import { DialogService } from '../shared/dialog.service';
 import { AppComponent } from '../app.component';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-center-type',
@@ -106,7 +107,9 @@ export class CenterTypeComponent implements OnInit {
 
   create(create: CenterTypeModel){
     this.appComponent.loading=true;
-    this.httpClient.post<any>(CreateCenterTypeUrl, create).subscribe(
+    this.httpClient.post<any>(CreateCenterTypeUrl, create).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
       response => {
         this.appComponent.loading= false;
        if (response.success) {
@@ -114,8 +117,7 @@ export class CenterTypeComponent implements OnInit {
         this.createForm =false;
        this.getCenterTypes();
        } else {
-        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
-         console.log('fail');
+     
        }
       }
     );

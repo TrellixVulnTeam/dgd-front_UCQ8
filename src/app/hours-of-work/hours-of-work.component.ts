@@ -4,6 +4,7 @@ import { HoursOfWorkModel, DeleteHoursOfWorkModel } from './hourse-of-work-model
 import { EditHourseOfWorkUrl, GetHoursOfWorksUrl } from '../configUrls';
 import { DialogService } from '../shared/dialog.service';
 import { AppComponent } from '../app.component';
+import { catchError } from 'rxjs/operators';
 
 
 @Component({
@@ -111,7 +112,9 @@ export class HoursOfWorkComponent implements OnInit {
 
   create(create: HoursOfWorkModel){
     this.appComponent.loading=true;
-    this.httpClient.post<any>(EditHourseOfWorkUrl, create).subscribe(
+    this.httpClient.post<any>(EditHourseOfWorkUrl, create).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
       response => {
         this.appComponent.loading= false;
        if (response.success) {

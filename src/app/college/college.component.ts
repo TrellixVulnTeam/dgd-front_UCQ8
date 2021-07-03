@@ -4,6 +4,7 @@ import { CollegeModel, DeleteCollegeModel } from './college-model.component';
 import { EditCollegeUrl, GetColegesUrl } from '../configUrls';
 import { DialogService } from '../shared/dialog.service';
 import { AppComponent } from '../app.component';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-college',
@@ -106,7 +107,9 @@ export class CollegeComponent implements OnInit {
 
   create(create: CollegeModel){
     this.appComponent.loading=true;
-    this.httpClient.post<any>(EditCollegeUrl, create).subscribe(
+    this.httpClient.post<any>(EditCollegeUrl, create).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
       response => {
         this.appComponent.loading= false;
        if (response.success) {
@@ -114,8 +117,7 @@ export class CollegeComponent implements OnInit {
         this.createForm =false;
        this.getColleges();
        } else {
-        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
-         console.log('fail');
+    
        }
       }
     );

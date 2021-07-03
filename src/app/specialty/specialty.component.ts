@@ -4,6 +4,7 @@ import { SpecialtyModel, DeleteSpecialtyModel } from './specialty-model.componen
 import { EditSpecialtyUrl, GetSpecialtiesUrl } from '../configUrls';
 import { DialogService } from '../shared/dialog.service';
 import { AppComponent } from '../app.component';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-specialty',
@@ -106,7 +107,9 @@ export class SpecialtyComponent implements OnInit {
 
   create(create: SpecialtyModel){
     this.appComponent.loading=true;
-    this.httpClient.post<any>(EditSpecialtyUrl, create).subscribe(
+    this.httpClient.post<any>(EditSpecialtyUrl, create).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
       response => {
         this.appComponent.loading= false;
        if (response.success) {
@@ -114,8 +117,7 @@ export class SpecialtyComponent implements OnInit {
         this.createForm =false;
        this.getSpecialties();
        } else {
-        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
-         console.log('fail');
+      
        }
       }
     );
