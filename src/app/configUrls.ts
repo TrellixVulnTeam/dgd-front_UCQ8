@@ -47,3 +47,5 @@ export const EditDoctorUrl =  BaseUrl + 'doctor'
 
 export const SpecialtyDoctorUrl = BaseUrl + 'doctor_specialty'
 
+export const DownloadImgUrl = BaseUrl
+

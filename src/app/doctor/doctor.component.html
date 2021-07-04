@@ -342,7 +342,7 @@
           <td  mat-cell *matCellDef="let element"> 
          <div *ngIf='showImagesColumns'>
             <div *ngFor="let image of element.images"> 
-            <a   href="{{image.path}}">
+            <a   (click)="Download(image.path, 'doctor_img')">
               {{image.path}} 
             </a> 
             <mat-icon title='پاک کردن عکس'  (click) = 'deleteImage(image)'>close</mat-icon>

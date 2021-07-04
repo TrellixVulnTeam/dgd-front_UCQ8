@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { AddressModel, DoctorModel, City, ImageModel, PhoneModel, Pivot, Province, SpecialtyDoctorModel, College } from './doctor-model.component';
-import { ImageUrl, EditDoctorUrl, GetDoctorsUrl, PhoneUrl, AddressUrl, SpecialtyDoctorUrl, GetProvincesUrl, GetCitiesUrl, EditSpecialtyUrl, GetColegesUrl } from '../configUrls';
+import { ImageUrl, EditDoctorUrl, GetDoctorsUrl, PhoneUrl, AddressUrl, SpecialtyDoctorUrl, GetProvincesUrl, GetCitiesUrl, EditSpecialtyUrl, GetColegesUrl, DownloadImgUrl } from '../configUrls';
 import { DialogService } from '../shared/dialog.service';
 import { AppComponent } from '../app.component';
 import { SpecialtyModel } from '../specialty/specialty-model.component';
@@ -244,6 +244,10 @@ emptyCollege = new College(0,'','');
        }
       }
     );
+  }
+
+  Download(img: string, subUrl : string) {
+    window.open(DownloadImgUrl + subUrl + '/' + img);
   }
 
   deleteImage(image: any) {

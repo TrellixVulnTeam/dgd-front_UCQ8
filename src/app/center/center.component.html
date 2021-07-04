@@ -89,12 +89,16 @@
         <mat-label> طول جغرافیایی </mat-label>
         <input matInput name='createCenter.longitude' [(ngModel)] = 'createCenter.longitude' >
       </mat-form-field>
-      
 
-      <mat-form-field>
-        <mat-label> لوگو</mat-label>
-        <input matInput name='createCenter.logo' [(ngModel)] = 'createCenter.logo' >
-      </mat-form-field>
+        <label>
+          <mat-label> لوگو</mat-label>
+          <input  type="file" (change)="setLogo($event)" style="display:none" multiple/>
+          <a mat-raised-button color="primary">
+            <mat-icon>file_upload</mat-icon>
+           آپلود عکس
+          </a>
+        </label> 
+      
 
       <mat-form-field>
         <mat-label> استان</mat-label>
@@ -327,12 +331,19 @@
         <th mat-header-cell *matHeaderCellDef>  لوگو </th>
           <td  mat-cell *matCellDef="let element"> 
             <span *ngIf = '!element.is_editable'>
-              {{element.logo}} 
+            <a  href="#" (click)="Download(element.logo, 'logo')"  >
+             دانلود
+            </a>
             </span>    
             <div *ngIf ='element.is_editable'>
-              <mat-form-field>
-                <input matInput type="text"  name={{element.logo}}  [(ngModel)] = 'element.logo'>
-              </mat-form-field>
+              <label>
+                <mat-label> لوگو</mat-label>
+                <input  type="file" (change)="setLogo($event)"  style="display:none" multiple/>
+                <a mat-raised-button color="primary">
+                  <mat-icon>file_upload</mat-icon>
+                 آپلود عکس
+                </a>
+              </label> 
              </div>
           </td>
       </ng-container>
@@ -393,8 +404,9 @@
           <td  mat-cell *matCellDef="let element"> 
          <div *ngIf='showImagesColumns'>
             <div *ngFor="let image of element.images"> 
-            <a   href="{{image.path}}">
-              {{image.path}} 
+            <a   href="#" (click)="Download(image.path, 'center_img')">
+              دانلود
+              <!-- {{image.path}}  -->
             </a> 
             <mat-icon title='پاک کردن عکس'  (click) = 'deleteImage(image)'>close</mat-icon>
           </div>  

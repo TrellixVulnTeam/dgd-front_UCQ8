@@ -12,7 +12,7 @@ export class CenterModel {
         public governmental_type :string,
         public latitude :number,
         public longitude :number,
-        public logo :string,
+        // public logo :string,
         // public created_at :string,
         public updated_at :string,
         public _method :string,

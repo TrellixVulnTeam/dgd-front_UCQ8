@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { AddressModel, CenterModel, City, ImageModel, InsuranceCompanyCenterModel, PhoneModel, Pivot, Province, SpecialDoctorModel, SpecialTestCenterModel } from './center-model.component';
-import { ImageUrl, EditCenterUrl, EditHourseOfWorkUrl, GetCentersUrl, PhoneUrl, AddressUrl, SpecialTestsCenterUrl, InsuranceCompaniesCenterUrl, GetProvincesUrl, GetCitiesUrl, SpecialDoctorUrl } from '../configUrls';
+import { ImageUrl, EditCenterUrl, EditHourseOfWorkUrl, GetCentersUrl, PhoneUrl, AddressUrl, SpecialTestsCenterUrl, InsuranceCompaniesCenterUrl, GetProvincesUrl, GetCitiesUrl, SpecialDoctorUrl, DownloadImgUrl } from '../configUrls';
 import { DialogService } from '../shared/dialog.service';
 import { AppComponent } from '../app.component';
 import { SpecialTestModel } from '../special-test/special-test-model.component';
@@ -78,8 +78,8 @@ Cities : City[] = [];
 emptyProvince = new Province(32,1,'',''); //  defult no provicne with id= 32
 emptyCities = new City(473,32,'','');//  defult no city with id= 473
 
-
-  createCenter = new CenterModel(0, '', '', '', 0, '', 0, 0, null, 'private', 0 , 0, '', '' , 'post',false, false, false, false, false, false,1,32,473,null ,[],[],this.emptyProvince,this.emptyCities,[],[],[], [],[], []);
+  technical_manager_name = 'ندارد';
+  createCenter = new CenterModel(0, '', '', this.technical_manager_name, 0, '', 0, 0, 13, 'private', 0 , 0, '' , 'post',false, false, false, false, false, false,1,32,473,null ,[],[],this.emptyProvince,this.emptyCities,[],[],[], [],[], []);
   createPhone = new PhoneModel(0,'','centers','post');
   createAddress = new AddressModel(0,'','','centers','post');
   createSpecialDoctor = new SpecialDoctorModel(0,'',0,'post');
@@ -98,6 +98,8 @@ emptyCities = new City(473,32,'','');//  defult no city with id= 473
   InsuranceCompanies : InsurranceCompanyModel[] = []
 
  
+  formData = new FormData();
+
   ngOnInit(): void {
     this.getProvinces();
     this.getCenters();
@@ -196,7 +198,13 @@ emptyCities = new City(473,32,'','');//  defult no city with id= 473
   update(center: CenterModel) {
     center._method = "put";
     this.appComponent.loading=true;
-    this.httpClient.post<any>(EditCenterUrl + '/' + center.id, center).subscribe(
+    Object.entries(center).forEach(
+      ([key, value]: any[]) => {
+        if (key != 'logo') {
+          this.formData.set(key, value);
+        }
+      })
+    this.httpClient.post<any>(EditCenterUrl + '/' + center.id, this.formData).subscribe(
       response => {
         console.log(response);
         this.appComponent.loading= false;
@@ -223,7 +231,11 @@ emptyCities = new City(473,32,'','');//  defult no city with id= 473
 
   create(create: CenterModel){
     this.appComponent.loading=true;
-    this.httpClient.post<any>(EditCenterUrl, create).pipe(
+    Object.entries(create).forEach(
+      ([key, value]: any[]) => {
+        this.formData.set(key, value);
+      })
+    this.httpClient.post<any>(EditCenterUrl, this.formData).pipe(
       catchError(this.appComponent.handleError<any[]>('', [])),  
     ).subscribe(
       response => {
@@ -288,6 +300,14 @@ emptyCities = new City(473,32,'','');//  defult no city with id= 473
 
   }
 
+  setLogo(event : any) {
+    let file = <File>event.target.files[0];
+    this.formData.append('logo', file);
+  }
+
+  Download(img: string, subUrl : string) {
+    window.open(DownloadImgUrl + subUrl + '/' + img);
+  }
 
   deletePhone(phone: any) {
     this.dialogService.openConfirmDialog().afterClosed().subscribe(
