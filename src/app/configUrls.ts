@@ -1,4 +1,4 @@
-export const  BaseUrl = 'http://0.0.0.0:8000/api/';
+export const  BaseUrl = 'http://localhost:8000/api/';
 // export const  BaseUrl = 'http://127.0.0.1:8000/api/';
 
 export const GetProvincesUrl =  BaseUrl + 'provinces'
