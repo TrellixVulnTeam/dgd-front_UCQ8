@@ -26,6 +26,7 @@ export class DoctorModel {
         public phone_editable :boolean,
         public address_editable :boolean,
         public specialty_doctor_editable :boolean,
+        public center_doctor_editable :boolean,
         
         
         public country: Country,
@@ -36,6 +37,7 @@ export class DoctorModel {
         public phones: PhoneModel[],
         public addresses: AddressModel[],
         public specialty_doctor: SpecialtyDoctorModel[],
+        public center_doctor: CenterDoctorModel[],
     ) {
 
     }
@@ -131,11 +133,23 @@ export class SpecialtyDoctorModel {
     }
 }
 
+export class CenterDoctorModel {
+    constructor(
+      public  id : number,
+      public name : string,
+      public _method :string,
+      public pivot : Pivot,
+    ) {
+
+    }
+}
+
 export class Pivot {
     constructor(
       public  id : number,
       public  specialty_id : number | null,
       public  doctor_id : number,
+      public  center_id : number | null,
     ) {
 
     }

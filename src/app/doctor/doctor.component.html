@@ -469,6 +469,36 @@
       </div>
       </td>
       </ng-container>
+
+      <ng-container matColumnDef="centers">
+        <th mat-header-cell *matHeaderCellDef>  مراکز مرتبط  <mat-icon class="delete-phone" (click)="toggleColumn('centers')">remove_red_eye</mat-icon></th>  
+        <td  mat-cell *matCellDef="let element"> 
+          <div *ngIf='showCentersColumns'>
+            <div *ngFor="let center of element.centers"> 
+            <span>
+              {{center.name}}  
+            </span> 
+            <mat-icon class="delete-phone" title='پاک کردن مرکز '  (click) = 'deleteCenterDoctor(center.pivot)'>close</mat-icon>
+            <br>
+          </div> 
+          <mat-icon title='اضافه کردن مرکز ' (click)="editCenterDoctor(element)">add</mat-icon>
+          <div *ngIf='element.center_doctor_editable'>
+          <mat-form-field>
+           <mat-select [(ngModel)] = 'pivot_id'>
+             <mat-option *ngFor='let center of this.Centers' value='{{ center.id}}' >
+                 {{ center.name }}
+             </mat-option>
+             </mat-select>
+          </mat-form-field>  
+          <mat-icon class="delete-phone" (click)="addCenterDoctor(pivot_id, element.id)">check</mat-icon>
+        </div>
+      </div>
+
+      <div *ngIf='!showCentersColumns'>
+        <mat-icon class="delete-phone" (click)="toggleColumn('centers')">remove_red_eye</mat-icon>
+      </div>
+      </td>
+      </ng-container>
   
     
     <ng-container matColumnDef="updated_at">

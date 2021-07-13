@@ -1,16 +1,18 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { AddressModel, DoctorModel, City, ImageModel, PhoneModel, Pivot, Province, SpecialtyDoctorModel, College } from './doctor-model.component';
-import { ImageUrl, EditDoctorUrl, GetDoctorsUrl, PhoneUrl, AddressUrl, SpecialtyDoctorUrl, GetProvincesUrl, GetCitiesUrl, EditSpecialtyUrl, GetColegesUrl, DownloadImgUrl } from '../configUrls';
+import { AddressModel, DoctorModel, City, ImageModel, PhoneModel, Pivot, Province, SpecialtyDoctorModel, CenterDoctorModel, College } from './doctor-model.component';
+import { ImageUrl, EditDoctorUrl, GetDoctorsUrl, PhoneUrl, AddressUrl, SpecialtyDoctorUrl, CenterDoctorUrl, GetProvincesUrl, GetCitiesUrl, EditSpecialtyUrl, GetColegesUrl, DownloadImgUrl } from '../configUrls';
 import { DialogService } from '../shared/dialog.service';
 import { AppComponent } from '../app.component';
 import { SpecialtyModel } from '../specialty/specialty-model.component';
+import { CenterModel } from '../center/center-model.component';
 import { SpecialtyComponent } from '../specialty/specialty.component';
 import { CollegeComponent } from '../college/college.component';
 import { CollegeModel } from '../college/college-model.component';
 import { catchError } from 'rxjs/operators';
 import { HoursOfWorkComponent } from '../hours-of-work/hours-of-work.component';
 import { HoursOfWorkModel } from '../hours-of-work/hourse-of-work-model.component';
+import { CenterComponent } from '../center/center.component';
 
 @Component({
   selector: 'app-center',
@@ -41,6 +43,7 @@ export class DoctorComponent implements OnInit {
          'phones',
          'addresses',
          'specialties',
+         'centers',
          'edit',
          'delete',
         //  'updated_at',
@@ -50,6 +53,7 @@ export class DoctorComponent implements OnInit {
     private dialogService : DialogService,
     private appComponent : AppComponent,
     private specialtyComponent : SpecialtyComponent,
+    private centerComponent : CenterComponent,
     private collegeComponent : CollegeComponent,
     private hoursOfWorkComponent : HoursOfWorkComponent,
   ) { }
@@ -60,6 +64,7 @@ showPhoneColumns = false;
 showImagesColumns = false;
 showAddressesColumns = false;
 showSpecialtiesColumns = false;
+showCentersColumns = false;
 showHoursOfWorksColumns = false;
 
 
@@ -75,20 +80,22 @@ emptyCities = new City(473,32,'','');
 emptyCollege = new College(0,'','');
 
 
-  createDoctor = new DoctorModel(0, '', '', 0, 0, 1, 32, 473, null, 0, '', 0, null, 0, 0, '', 'post', false, false,false, false , false, [] , this.emptyProvince, this.emptyCities, this.emptyCollege,[],[],[], []);
+  createDoctor = new DoctorModel(0, '', '', 0, 0, 1, 32, 473, null, 0, '', 0, null, 0, 0, '', 'post', false, false,false, false , false, false, [] , this.emptyProvince, this.emptyCities, this.emptyCollege,[],[],[], [], []);
   createPhone = new PhoneModel(0,'','doctors','post');
   createAddress = new AddressModel(0,'','','doctors','post');
   createSpecialty = new SpecialtyModel(0,'', '', '', '','post',false);
 
-  pivot = new Pivot(0,null,0);
+  pivot = new Pivot(0,null,0,null);
   pivot_id : number = 0
   createSpecialties = new SpecialtyDoctorModel(0, '', '', '', this.pivot);
+  createCenters = new CenterDoctorModel(0, '', 'post', this.pivot);
   
 
 
   
   Doctors : DoctorModel[] = []
   Specialties : SpecialtyModel[] = []
+  Centers : CenterModel[] = []
   
   
 
@@ -97,6 +104,7 @@ emptyCollege = new College(0,'','');
     this.getProvinces();
     this.getDoctors();
     this.specialtyComponent.getSpecialties();  
+    this.centerComponent.getCenters();  
     this.collegeComponent.getColleges();
     this.hoursOfWorkComponent.getHourseOfWorks();
   }
@@ -204,32 +212,7 @@ emptyCollege = new College(0,'','');
     );
   }
 
-  // update(center: CenterModel) {
-  //   console.log(22);
-  //   center._method = "put";
-  //   this.appComponent.loading=true;
-  //   this.httpClient.post<any>(EditCenterUrl + '/' + center.id, center).pipe(
-
-  //     tap(response => console.log(22)),
-  //     catchError(this.handleError<any[]>('getHeroes', [])),
-
-
-  //   ).subscribe(
-  //     Response => {
-  //       console.log(Response);
-  //     }
-  //   );
-  // }
-
-  // private handleError<T>(operation = 'operation', result?: T) {
-  //   return (error: any): Observable<T> => {
-  //     // Let the app keep running by returning an empty result.
-  //     console.log(error);
-  //     this.appComponent.loading =false;
-  //     return of(result as T);
-  //   };
-  // }
-
+ 
   showCreateForm() {
     this.createForm = true;
     this.Colleges = this.collegeComponent.Colleges;
@@ -453,6 +436,58 @@ emptyCollege = new College(0,'','');
 
   }
 
+
+  deleteCenterDoctor(centerDoctorPivot: any) { 
+    this.dialogService.openConfirmDialog().afterClosed().subscribe(
+      res => {
+        if (res) {
+          this.appComponent.loading = true;
+          this.httpClient.delete<any>(CenterDoctorUrl + '/' + centerDoctorPivot.id).subscribe(
+            response => {
+              this.appComponent.loading = false;
+            if (response.success) {
+              this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+              this.getDoctors();
+            } else {
+              console.log('fail');
+              this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+            }
+            }
+          );
+        }
+      }
+
+    )
+  }
+  
+  editCenterDoctor(elemen:any) {
+    elemen.center_doctor_editable = true;
+    this.Centers = this.centerComponent.Centers;
+  }
+
+  addCenterDoctor(center_doctor_id: number, doctor_id: number) {
+    if (center_doctor_id != 0) {
+      this.pivot.center_id = center_doctor_id;
+      this.pivot.doctor_id = doctor_id;
+    }
+    
+    this.appComponent.loading=true;
+    this.httpClient.post<any>(CenterDoctorUrl + '/' + this.pivot.center_id, this.pivot).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
+      response => {
+        this.appComponent.loading= false;
+       if (response.success) {
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+       this.getDoctors();
+       } else {
+        
+       }
+      }
+    );
+
+  }
+
   toggleColumn(column: string){
     switch (column)
     {
@@ -467,6 +502,9 @@ emptyCollege = new College(0,'','');
       break;
       case "specialties": 
       this.showSpecialtiesColumns = !this.showSpecialtiesColumns;
+      break;
+      case "centers": 
+      this.showCentersColumns = !this.showCentersColumns;
       break;
     }
  
