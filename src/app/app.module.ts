@@ -28,6 +28,7 @@ import { DoctorComponent } from './doctor/doctor.component';
 import { SpecialtyComponent } from './specialty/specialty.component';
 import { CollegeComponent } from './college/college.component';
 import { HoursOfWorkComponent } from './hours-of-work/hours-of-work.component';
+import { DoctorCenterModel } from './center/center-model.component';
 
 
 

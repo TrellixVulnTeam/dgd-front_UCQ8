@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { AddressModel, CenterModel, City, ImageModel, InsuranceCompanyCenterModel, PhoneModel, Pivot, Province, SpecialTestCenterModel } from './center-model.component';
-import { ImageUrl, EditCenterUrl, EditHourseOfWorkUrl, GetCentersUrl, PhoneUrl, AddressUrl, SpecialTestsCenterUrl, InsuranceCompaniesCenterUrl, GetProvincesUrl, GetCitiesUrl, DownloadImgUrl } from '../configUrls';
+import { AddressModel, CenterModel, City, ImageModel, InsuranceCompanyCenterModel, DoctorCenterModel, PhoneModel, Pivot, Province, SpecialTestCenterModel } from './center-model.component';
+import { ImageUrl, EditCenterUrl, EditHourseOfWorkUrl, GetCentersUrl, PhoneUrl, AddressUrl, SpecialTestsCenterUrl, InsuranceCompaniesCenterUrl, GetProvincesUrl, GetCitiesUrl, DownloadImgUrl, CenterDoctorUrl, GetDoctorsUrl } from '../configUrls';
 import { DialogService } from '../shared/dialog.service';
 import { AppComponent } from '../app.component';
 import { SpecialTestModel } from '../special-test/special-test-model.component';
 import { SpecialTestComponent } from '../special-test/special-test.component';
 import { InsurranceCompanyModel } from '../insurrance-company/insurrance-company-mode.component';
+import { DoctorModel } from '../doctor/doctor-model.component';
 import { InsurranceCompanyComponent } from '../insurrance-company/insurrance-company.component';
 import { HoursOfWorkComponent } from '../hours-of-work/hours-of-work.component';
 import { HoursOfWorkModel } from '../hours-of-work/hourse-of-work-model.component';
@@ -45,6 +46,7 @@ export class CenterComponent implements OnInit {
          'addresses',
          'special_tests',
          'insurance_companies',
+         'doctors',
          'edit',
          'delete',
         //  'updated_at',
@@ -66,6 +68,7 @@ showImagesColumns = false;
 showAddressesColumns = false;
 showSpecialTestsColumns = false;
 showInsuranceCompaniesColumns = false;
+showDoctorsColumns = false;
 showHoursOfWorksColumns = false;
 
 
@@ -78,15 +81,16 @@ emptyProvince = new Province(32,1,'',''); //  defult no provicne with id= 32
 emptyCities = new City(473,32,'','');//  defult no city with id= 473
 
   technical_manager_name = 'ندارد';
-  createCenter = new CenterModel(0, '', '', this.technical_manager_name, 0, '', 0, 0, 13, 'private', 0 , 0, '' , 'post',false, false, false, false, false,1,32,473,null ,[],[],this.emptyProvince,this.emptyCities,[],[],[], [],[]);
+  createCenter = new CenterModel(0, '', '', this.technical_manager_name, 0, '', 0, 0, 13, 'private', 0 , 0, '' , 'post',false, false, false, false, false,false,1,32,473,null ,[],[],this.emptyProvince,this.emptyCities,[],[],[], [],[],[]);
   createPhone = new PhoneModel(0,'','centers','post');
   createAddress = new AddressModel(0,'','','centers','post');
   
 
-  pivot = new Pivot(0,null,null,0);
+  pivot = new Pivot(0,null,null,0, null);
   pivot_id : number = 0
   createSpecialTests = new SpecialTestCenterModel(0, '', '', '', this.pivot);
   createInsuranceCompanies = new InsuranceCompanyCenterModel(0, '', '', 'post', this.pivot, '');
+  createDoctors = new DoctorCenterModel(0, '', 'post', this.pivot);
 
 
   
@@ -95,6 +99,7 @@ emptyCities = new City(473,32,'','');//  defult no city with id= 473
   HoursOfWorks : HoursOfWorkModel[] = []
   CenterTypes : CenterTypeModel[] = []
   InsuranceCompanies : InsurranceCompanyModel[] = []
+  Doctors : DoctorModel[] = []
 
  
   formData = new FormData();
@@ -104,9 +109,29 @@ emptyCities = new City(473,32,'','');//  defult no city with id= 473
     this.getCenters();
     this.specialTestComponent.getSpecialTests();
     this.insuranceCompanyComponent.getInsuranceCompanies();
+    this.getDoctors();
     this.hoursOfWorkComponent.getHourseOfWorks();
     this.centerTypeComponent.getCenterTypes();
   
+  }
+  getDoctors() {  
+    this.appComponent.loading=true;
+    this.httpClient.get<any>(GetDoctorsUrl).subscribe(
+      response => {
+        this.appComponent.loading= false;
+        if (response.success) {
+          this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+          this.Doctors = response.data;
+          this.Doctors.forEach(element => {
+            element.is_editable =false;
+          })
+        } else {
+          this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+          console.log('fail.')
+        }
+       
+      }
+    );
   }
 
   getProvinces() {
@@ -508,6 +533,58 @@ emptyCities = new City(473,32,'','');//  defult no city with id= 473
 
   }
 
+  deleteDoctorCenter(doctorPivot: any) {
+    this.dialogService.openConfirmDialog().afterClosed().subscribe(
+       res => {
+         if (res) {
+           this.appComponent.loading = true;
+           this.httpClient.delete<any>(CenterDoctorUrl + '/' + doctorPivot.id).subscribe(
+             response => {
+               this.appComponent.loading = false;
+             if (response.success) {
+               this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+               this.getCenters();
+             //  this.CenterTypes = this.appComponent.removeElementFromArray(center, this.CenterTypes); 
+             } else {
+               console.log('fail');
+               this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+             }
+             }
+           );
+         }
+       }
+ 
+     )
+   }
+   
+   editDoctorCenter(elemen:any) {
+     elemen.doctor_center_editable = true;
+   }
+ 
+   addDoctorCenter(doctor_center_id: number, center_id: number) {
+   
+     if (doctor_center_id != 0) {
+       this.pivot.doctor_id = doctor_center_id;
+       this.pivot.center_id = center_id;
+     }
+     
+     this.appComponent.loading=true;
+     this.httpClient.post<any>(CenterDoctorUrl + '/' + center_id, this.pivot).pipe(
+       catchError(this.appComponent.handleError<any[]>('', [])),  
+     ).subscribe(
+       response => {
+         this.appComponent.loading= false;
+        if (response.success) {
+         this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+        this.getCenters();
+        } else {
+     
+        }
+       }
+     );
+ 
+   }
+
   toggleColumn(column: string){
     switch (column)
     {
@@ -525,6 +602,9 @@ emptyCities = new City(473,32,'','');//  defult no city with id= 473
       break;
       case "insurance_companies": 
       this.showInsuranceCompaniesColumns = !this.showInsuranceCompaniesColumns;
+      break;
+      case "doctors": 
+      this.showDoctorsColumns = !this.showDoctorsColumns;
       break;
       case "special_doctors": 
     }
