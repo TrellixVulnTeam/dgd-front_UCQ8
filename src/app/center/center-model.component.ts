@@ -21,7 +21,7 @@ export class CenterModel {
         public address_editable :boolean,
         public special_test_center_editable :boolean,
         public insurance_company_center_editable :boolean,
-        public special_doctor_editable :boolean,
+        
 
         public country_id : number | null,
         public province_id : number | null,
@@ -37,7 +37,6 @@ export class CenterModel {
         public addresses: AddressModel[],
         public special_tests_center: SpecialTestCenterModel[],
         public insurance_companies_center: InsuranceCompanyCenterModel[],
-        public special_doctors: SpecialDoctorModel[],
     ) {
 
     }
@@ -153,17 +152,6 @@ export class InsuranceCompanyCenterModel {
     }
 }
 
-
-export class SpecialDoctorModel {
-    constructor(
-      public  id : number,
-      public name : string,
-      public center_id : number,
-      public _method :string,
-    ) {
-
-    }
-}
 
 
 export class Pivot {

@@ -536,35 +536,7 @@
         <mat-icon class="delete-phone" (click)="toggleColumn('insurance_companies')">remove_red_eye</mat-icon>
       </div>
       </td>
-      </ng-container>
-
-
-      <ng-container matColumnDef="special_doctors">
-        <th mat-header-cell *matHeaderCellDef>  دکترهای مرکز  <mat-icon class="delete-phone" (click)="toggleColumn('special_doctors')">remove_red_eye</mat-icon></th>  
-        <td  mat-cell *matCellDef="let element"> 
-          <div *ngIf='showSpecialDoctorsColumns'>
-            <div *ngFor="let special_doctor of element.special_doctors"> 
-            <span>
-              {{special_doctor.name}}              
-            </span> 
-            <mat-icon class="delete-phone" title='پاک کردن دکتز'  (click) = 'deleteSpecialDoctor(special_doctor)'>close</mat-icon>
-            <br>
-          </div> 
-          <mat-icon title='اضافه کردن دکتر' (click)="editSpecialDoctor(element)">add</mat-icon>
-          <div *ngIf='element.special_doctor_editable'>
-          <mat-form-field>
-            <input matInput name='createSpecialDoctor.name' [(ngModel)] = 'createSpecialDoctor.name' placeholder="نام دکتر">
-          </mat-form-field>  
-          <mat-icon class="delete-phone" (click)="addSpecialDoctor(createSpecialDoctor, element.id)">check</mat-icon>
-        </div>
-      </div>
-
-      <div *ngIf='!showSpecialDoctorsColumns'>
-        <mat-icon class="delete-phone" (click)="toggleColumn('special_doctors')">remove_red_eye</mat-icon>
-      </div>
-      </td>
-      </ng-container>
-  
+      </ng-container> 
     
     <ng-container matColumnDef="updated_at">
       <th mat-header-cell *matHeaderCellDef> تاریخ ساخت </th>
