@@ -14,7 +14,7 @@ export class InsurranceCompanyComponent implements OnInit {
   title = 'لیست انواع بیمه' ;  
 
   createForm : boolean = false ;
-  displayedColumns: string[] = ['id', 'name', 'name_en', 'type', 'created_at', 'edit', 'delete'];
+  displayedColumns: string[] = ['id', 'name', 'name_en', 'type', 'insurance_type', 'created_at', 'edit', 'delete'];
   constructor(
     private httpClient: HttpClient, 
     private dialogService : DialogService,
@@ -22,7 +22,7 @@ export class InsurranceCompanyComponent implements OnInit {
   ) { }
 
   
-  createInsuranceCompany = new InsurranceCompanyModel(0, '', '', '','post', false, 'private');
+  createInsuranceCompany = new InsurranceCompanyModel(0, '', '', '','post', false, 'private', 'normal');
 
 
   InsuranceCompanies : InsurranceCompanyModel[] = []

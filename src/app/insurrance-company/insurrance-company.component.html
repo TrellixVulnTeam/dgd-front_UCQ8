@@ -17,13 +17,25 @@
       </mat-form-field>
 
       <mat-form-field >
-        <mat-label> نوع بیمه</mat-label>
+        <mat-label>خصوصی/دولتی</mat-label>
         <mat-select  matInput [(ngModel)] = 'createInsuranceCompany.type' >
           <mat-option [value]="'supplementary'"  name='createInsuranceCompany.type' >
           دولتی
           </mat-option>
           <mat-option [value]="'normal'" name='createInsuranceCompany.type' > 
             خصوصی
+            </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field >
+        <mat-label> نوع بیمه</mat-label>
+        <mat-select  matInput [(ngModel)] = 'createInsuranceCompany.insurance_type' >
+          <mat-option [value]="'takmili'"  name='createInsuranceCompany.insurance_type' >
+          تکمیلی
+          </mat-option>
+          <mat-option [value]="'normal'" name='createInsuranceCompany.insurance_type' > 
+            معمولی
             </mat-option>
         </mat-select>
       </mat-form-field>
@@ -73,7 +85,7 @@
 
 
     <ng-container matColumnDef="type">
-        <th mat-header-cell *matHeaderCellDef> نوع بیمه  </th>
+        <th mat-header-cell *matHeaderCellDef> خصوصی/دولتی  </th>
           <td  mat-cell *matCellDef="let element"> 
             <span *ngIf = '!element.is_editable'>
               {{ element.type === 'supplementary' ? 'دولتی' : 'خصوصی ' }}        
@@ -86,6 +98,27 @@
                   </mat-option>
                   <mat-option  value='normal' >
                    خصوصی
+                </mat-option>
+                  </mat-select>
+              </mat-form-field>
+             </div>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="insurance_type">
+        <th mat-header-cell *matHeaderCellDef> نوع بیمه </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{ element.insurance_type === 'takmili' ? 'تکمیلی' : 'معمولی ' }}        
+            </span>    
+            <div *ngIf ='element.is_editable'>
+              <mat-form-field>
+                <mat-select [(ngModel)] = 'element.insurance_type'>
+                  <mat-option  value='takmili' >
+                     تکمیلی
+                  </mat-option>
+                  <mat-option  value='normal' >
+                   معمولی
                 </mat-option>
                   </mat-select>
               </mat-form-field>

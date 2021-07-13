@@ -54,6 +54,14 @@
         <input matInput name='createDoctor.satisfaction' [(ngModel)] = 'createDoctor.satisfaction' >
       </mat-form-field>
       
+      <mat-form-field>
+        <mat-label>   ساعت کاری </mat-label>
+        <mat-select [(ngModel)] = 'createDoctor.hours_of_work_id' [(value)]="createDoctor.hours_of_work_id">
+          <mat-option *ngFor='let hours_of_work of this.HoursOfWorks' value='{{hours_of_work.id}}' >
+              {{ hours_of_work.id }}
+          </mat-option>
+          </mat-select>
+       </mat-form-field> 
 
       <mat-form-field>
         <mat-label> عرض جغرافیایی </mat-label>
@@ -234,6 +242,24 @@
           </td>
       </ng-container>
 
+
+      <ng-container matColumnDef="hours_of_work_id">
+        <th mat-header-cell *matHeaderCellDef> ساعت کاری </th>
+          <td  mat-cell *matCellDef="let element"> 
+            <span *ngIf = '!element.is_editable'>
+              {{element.hours_of_work_id}} 
+            </span>    
+             <div *ngIf='element.is_editable'>
+              <mat-form-field>
+               <mat-select [(ngModel)] = 'element.hours_of_work_id'>
+                 <mat-option *ngFor='let hours_of_work of this.HoursOfWorks' value='{{hours_of_work.id}}' >
+                     {{ hours_of_work.id }}
+                 </mat-option>
+                 </mat-select>
+              </mat-form-field>  
+            </div>
+          </td>
+      </ng-container>
 
       <ng-container matColumnDef="latitude">
         <th mat-header-cell *matHeaderCellDef> عرض جغرافیایی </th>

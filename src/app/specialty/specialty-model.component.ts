@@ -3,6 +3,7 @@ export class SpecialtyModel {
         public id :number,
         public name :string,
         public name_en :string,
+        public description :string,
         public created_at :string,
         public _method :string,
         public is_editable :boolean,

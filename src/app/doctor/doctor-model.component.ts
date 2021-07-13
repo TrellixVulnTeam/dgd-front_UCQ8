@@ -13,7 +13,7 @@ export class DoctorModel {
         public area_name :string,
         
         public satisfaction :number,
-        
+        public hours_of_work_id :number | null,
         
         public latitude :number,
         public longitude :number,

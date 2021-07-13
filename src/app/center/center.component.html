@@ -57,7 +57,7 @@
       </mat-form-field>
       
       <mat-form-field>
-        <mat-label> شماره ی ساعت کاری </mat-label>
+        <mat-label>   ساعت کاری </mat-label>
         <mat-select [(ngModel)] = 'createCenter.hours_of_work_id' [(value)]="createCenter.hours_of_work_id">
           <mat-option *ngFor='let hours_of_work of this.HoursOfWorks' value='{{hours_of_work.id}}' >
               {{ hours_of_work.id }}

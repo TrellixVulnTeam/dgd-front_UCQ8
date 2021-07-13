@@ -9,6 +9,8 @@ import { SpecialtyComponent } from '../specialty/specialty.component';
 import { CollegeComponent } from '../college/college.component';
 import { CollegeModel } from '../college/college-model.component';
 import { catchError } from 'rxjs/operators';
+import { HoursOfWorkComponent } from '../hours-of-work/hours-of-work.component';
+import { HoursOfWorkModel } from '../hours-of-work/hourse-of-work-model.component';
 
 @Component({
   selector: 'app-center',
@@ -28,6 +30,7 @@ export class DoctorComponent implements OnInit {
          'area' ,
          'area_name' ,
          'satisfaction' ,
+         'hours_of_work_id' ,
          'latitude' ,
          'longitude' ,
          'country',
@@ -48,6 +51,7 @@ export class DoctorComponent implements OnInit {
     private appComponent : AppComponent,
     private specialtyComponent : SpecialtyComponent,
     private collegeComponent : CollegeComponent,
+    private hoursOfWorkComponent : HoursOfWorkComponent,
   ) { }
 
   
@@ -56,6 +60,7 @@ showPhoneColumns = false;
 showImagesColumns = false;
 showAddressesColumns = false;
 showSpecialtiesColumns = false;
+showHoursOfWorksColumns = false;
 
 
 
@@ -63,16 +68,17 @@ showSpecialtiesColumns = false;
 Provinces : Province[] = [];
 Cities : City[] = [];
 Colleges : CollegeModel[] = [];
+HoursOfWorks : HoursOfWorkModel[] = []
 
 emptyProvince = new Province(32,1,'','');
 emptyCities = new City(473,32,'','');
 emptyCollege = new College(0,'','');
 
 
-  createDoctor = new DoctorModel(0, '', '', 0, 0, 1, 32, 473, null, 0, '', 0, 0, 0, '', 'post', false, false,false, false , false, [] , this.emptyProvince, this.emptyCities, this.emptyCollege,[],[],[], []);
+  createDoctor = new DoctorModel(0, '', '', 0, 0, 1, 32, 473, null, 0, '', 0, null, 0, 0, '', 'post', false, false,false, false , false, [] , this.emptyProvince, this.emptyCities, this.emptyCollege,[],[],[], []);
   createPhone = new PhoneModel(0,'','doctors','post');
   createAddress = new AddressModel(0,'','','doctors','post');
-  createSpecialty = new SpecialtyModel(0,'', '', '','post',false);
+  createSpecialty = new SpecialtyModel(0,'', '', '', '','post',false);
 
   pivot = new Pivot(0,null,0);
   pivot_id : number = 0
@@ -92,6 +98,7 @@ emptyCollege = new College(0,'','');
     this.getDoctors();
     this.specialtyComponent.getSpecialties();  
     this.collegeComponent.getColleges();
+    this.hoursOfWorkComponent.getHourseOfWorks();
   }
 
   getProvinces() {
@@ -172,6 +179,7 @@ emptyCollege = new College(0,'','');
   onEdit(doctor: DoctorModel) {
     doctor.is_editable = !doctor.is_editable; 
     this.Colleges = this.collegeComponent.Colleges; 
+    this.HoursOfWorks = this.hoursOfWorkComponent.HourseOfWorks;
   }
 
   cancelEdit(doctor: DoctorModel) {
@@ -225,6 +233,7 @@ emptyCollege = new College(0,'','');
   showCreateForm() {
     this.createForm = true;
     this.Colleges = this.collegeComponent.Colleges;
+    this.HoursOfWorks = this.hoursOfWorkComponent.HourseOfWorks;
   }
 
   create(create: DoctorModel){

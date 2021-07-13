@@ -14,7 +14,7 @@ import { catchError } from 'rxjs/operators';
 export class SpecialtyComponent implements OnInit {
   title = 'لیست انواع تخصص‌ها' ;
   createForm : boolean = false ;
-  displayedColumns: string[] = ['id', 'name', 'name_en', 'created_at', 'edit', 'delete'];
+  displayedColumns: string[] = ['id', 'name', 'name_en', 'description', 'created_at', 'edit', 'delete'];
   constructor(
     private httpClient: HttpClient, 
     private dialogService : DialogService,
@@ -22,7 +22,7 @@ export class SpecialtyComponent implements OnInit {
   ) { }
 
   
-  createSpecialty = new SpecialtyModel(0, '', '', '','post',false);
+  createSpecialty = new SpecialtyModel(0, '', '', '', '','post',false);
 
 
   Specialties : SpecialtyModel[] = []

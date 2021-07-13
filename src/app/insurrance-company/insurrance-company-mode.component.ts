@@ -7,6 +7,7 @@ export class InsurranceCompanyModel {
         public _method :string,
         public is_editable :boolean,
         public type :string,
+        public insurance_type :string,
     ) {
 
     }
