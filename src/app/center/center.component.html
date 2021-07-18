@@ -331,9 +331,14 @@
         <th mat-header-cell *matHeaderCellDef>  لوگو </th>
           <td  mat-cell *matCellDef="let element"> 
             <span *ngIf = '!element.is_editable'>
-            <a  href="#" (click)="Download(element.logo, 'logo')"  >
-             دانلود
-            </a>
+              <span *ngIf= 'element.logo != null'>
+                <a  href="#" (click)="Download(element.logo, 'logo')"  >
+                  دانلود
+                 </a>
+              </span>
+              <span *ngIf= 'element.logo == null'>
+               بدون لوگو
+              </span>
             </span>    
             <div *ngIf ='element.is_editable'>
               <label>
