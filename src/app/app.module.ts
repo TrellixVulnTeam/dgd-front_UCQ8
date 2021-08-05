@@ -29,6 +29,9 @@ import { SpecialtyComponent } from './specialty/specialty.component';
 import { CollegeComponent } from './college/college.component';
 import { HoursOfWorkComponent } from './hours-of-work/hours-of-work.component';
 import { DoctorCenterModel } from './center/center-model.component';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatCardModule,} from '@angular/material/card';
 
 
 
@@ -42,6 +45,7 @@ const routes: Routes = [
   { path: 'specialty', component: SpecialtyComponent},
   { path: 'college', component: CollegeComponent},
   { path: 'hours_of_work', component: HoursOfWorkComponent},
+  { path: 'login', component: LoginComponent},
 ]
 
 
@@ -57,6 +61,7 @@ const routes: Routes = [
     SpecialtyComponent,
     CollegeComponent,
     HoursOfWorkComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,6 +82,8 @@ const routes: Routes = [
     MatSelectModule,
     MatProgressBarModule,
     MatSnackBarModule,
+    ReactiveFormsModule,
+    MatCardModule,
     
   ],
   providers: [SpecialTestComponent, InsurranceCompanyComponent, HoursOfWorkComponent, CenterTypeComponent, SpecialtyComponent, CollegeComponent, CenterComponent],

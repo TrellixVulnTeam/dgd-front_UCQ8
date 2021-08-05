@@ -166,7 +166,7 @@ emptyCities = new City(473,32,'','');//  defult no city with id= 473
  
   getCenters() {  
     this.appComponent.loading=true;
-    this.httpClient.get<any>(GetCentersUrl).subscribe(
+    this.httpClient.get<any>(GetCentersUrl, {withCredentials:true}).subscribe(
       response => {
         this.appComponent.loading= false;
         if (response.success) {
@@ -176,10 +176,13 @@ emptyCities = new City(473,32,'','');//  defult no city with id= 473
             element.is_editable =false;
           })
         } else {
-          this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','notok');
+          this.appComponent.openSnackBar('عملیات با موفقیت انجام نشد','notok');
           console.log('fail.')
         }
        
+      },
+      err => {
+        // this.appComponent.openSnackBar('', 'ok', err.status);
       }
     );
   }

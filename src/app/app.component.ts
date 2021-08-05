@@ -1,15 +1,17 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css', './IRANYekan/Farsi_numerals/WebFonts/css/fontiran.css']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewChecked {
   loading = true;
   @ViewChild(MatSidenav) 
   sidenav! : MatSidenav;
@@ -17,12 +19,15 @@ export class AppComponent {
 
   constructor(
     private observer: BreakpointObserver,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private router : Router,
+    private cdr : ChangeDetectorRef
     ){
 
   }
 
-  ngOnInit () {
+  ngAfterViewChecked () {
+    this.cdr.detectChanges();
     // this.observer.observe(['(max-width : 800px)']).subscribe((res) => {
     //   if(res.matches) {
     //     this.sidenav.mode = 'over';
@@ -61,14 +66,18 @@ export class AppComponent {
     return array;
     }
 
-    openSnackBar(message: string, action: string) {
+    openSnackBar(message: string, action: string, code: number = 200) {
+      if (code == 401) {
+        this.router.navigate(['/login']);
+        message = "لطفا مجددا به پنل لاگین کنید."
+      }
       this._snackBar.open(message, action, {
         panelClass: ['snack-bar-container-custom']
       });
     }
 
     public handleError<T>(operation = 'operation', result?: T) {
-    console.log(22);
+  
       let message = 'default';
       let message_en = 'default';
       let key =  'name';
