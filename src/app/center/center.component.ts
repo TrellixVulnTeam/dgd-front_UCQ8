@@ -182,7 +182,7 @@ emptyCities = new City(473,32,'','');//  defult no city with id= 473
        
       },
       err => {
-        // this.appComponent.openSnackBar('', 'ok', err.status);
+        this.appComponent.openSnackBar('', 'ok', err.status);
       }
     );
   }
