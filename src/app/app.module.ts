@@ -18,7 +18,7 @@ import { InsurranceCompanyComponent } from './insurrance-company/insurrance-comp
 import { CenterTypeComponent } from './center-type/center-type.component';
 import { CenterComponent } from './center/center.component';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dialog.component';
 import { FormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
@@ -32,6 +32,7 @@ import { DoctorCenterModel } from './center/center-model.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatCardModule,} from '@angular/material/card';
+import { AuthInterceptor } from './AuthInterceptor';
 
 
 
@@ -86,7 +87,12 @@ const routes: Routes = [
     MatCardModule,
     
   ],
-  providers: [SpecialTestComponent, InsurranceCompanyComponent, HoursOfWorkComponent, CenterTypeComponent, SpecialtyComponent, CollegeComponent, CenterComponent],
+  providers: [SpecialTestComponent, InsurranceCompanyComponent, HoursOfWorkComponent, CenterTypeComponent, SpecialtyComponent, CollegeComponent, CenterComponent, AppComponent,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent],
   entryComponents:[MatConfirmDialogComponent]
 })

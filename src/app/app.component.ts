@@ -4,6 +4,8 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { LoginUrl, LogoutUrl } from './configUrls';
 
 
 @Component({
@@ -21,7 +23,8 @@ export class AppComponent implements AfterViewChecked {
     private observer: BreakpointObserver,
     private _snackBar: MatSnackBar,
     private router : Router,
-    private cdr : ChangeDetectorRef
+    private cdr : ChangeDetectorRef,
+    private httpClient: HttpClient
     ){
 
   }
@@ -67,8 +70,7 @@ export class AppComponent implements AfterViewChecked {
     }
 
     openSnackBar(message: string, action: string, code: number = 200) {
-      if (code == 401) {
-        this.router.navigate(['/login']);
+      if (code == 401)  {
         message = "لطفا مجددا به پنل لاگین کنید."
       }
       this._snackBar.open(message, action, {
@@ -95,6 +97,21 @@ export class AppComponent implements AfterViewChecked {
         this.loading =false;
         return of(result as T);
       };
+    }
+
+
+    logout() {
+      this.httpClient.post<any>(LogoutUrl, []).subscribe(
+        response => {
+          this.router.navigate(['/login']);
+          localStorage.removeItem('id_token');
+          this.sidenav.toggle();
+        },
+        err => {
+          this.openSnackBar('خطا در خروج','ok');
+        }
+  
+      );
     }
 
 }

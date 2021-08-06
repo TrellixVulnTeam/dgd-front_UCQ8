@@ -1,9 +1,10 @@
-// export const  BaseUrl = 'http://185.81.96.196:8000/api/';
-export const  BaseUrl = 'http://localhost:8000/api/';
+export const  BaseUrl = 'http://185.81.96.196:8000/api/';
+// export const  BaseUrl = 'http://localhost:8000/api/';
 
 
 // login
 export const LoginUrl =  BaseUrl + 'auth/login'
+export const LogoutUrl =  BaseUrl + 'auth/logout'
 
 export const GetProvincesUrl =  BaseUrl + 'provinces'
 export const GetCitiesUrl =  BaseUrl + 'cities'

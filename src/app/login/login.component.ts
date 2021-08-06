@@ -24,14 +24,27 @@ export class LoginComponent implements AfterViewChecked {
     password: new FormControl(''),
   });
 
+  @Input() error: string | null = null;
 
-  submit() {
+  @Output() submitEM = new EventEmitter();
+
+
+  ngAfterViewChecked(): void {
+    this.appComponent.loading=false;
+    
+  }
+
+  login() {
+
+    
     if (this.form.valid) {
       this.submitEM.emit(this.form.value);
     }
-
-    this.httpClient.post<any>(LoginUrl, this.form.value, {withCredentials:true}).subscribe(
+    console.log(222);
+    this.httpClient.post<any>(LoginUrl, this.form.getRawValue()).subscribe(
       response => {
+        localStorage.setItem('id_token', response.token);
+        localStorage.setItem("expires_at", response.token_validity);
         this.router.navigate(['/']);
       },
       err => {
@@ -39,18 +52,6 @@ export class LoginComponent implements AfterViewChecked {
       }
 
     );
-  }
-
-  @Input() error: string | null = null;
-
-  @Output() submitEM = new EventEmitter();
-
-
-  ngAfterViewChecked(): void {
-    
-    this.appComponent.loading=false;
-    
-    
   }
 
 }

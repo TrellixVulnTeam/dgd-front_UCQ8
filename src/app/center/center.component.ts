@@ -166,7 +166,7 @@ emptyCities = new City(473,32,'','');//  defult no city with id= 473
  
   getCenters() {  
     this.appComponent.loading=true;
-    this.httpClient.get<any>(GetCentersUrl, {withCredentials:true}).subscribe(
+    this.httpClient.get<any>(GetCentersUrl).subscribe(
       response => {
         this.appComponent.loading= false;
         if (response.success) {
