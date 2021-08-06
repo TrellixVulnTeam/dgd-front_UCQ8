@@ -17,7 +17,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
         const idToken = localStorage.getItem("id_token");
 
+        console.log(idToken);
+
         if (idToken) {
+            console.log("umad to 1");
             const cloned = req.clone({
                 headers: req.headers.set("Authorization",
                     "Bearer " + idToken)
@@ -26,6 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
             return next.handle(cloned);
         }
         else {
+            console.log("umad to 2");
             this.router.navigate(['/login']);
             return next.handle(req);
         }
