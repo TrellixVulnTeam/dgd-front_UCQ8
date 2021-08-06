@@ -72,6 +72,7 @@ export class AppComponent implements AfterViewChecked {
     openSnackBar(message: string, action: string, code: number = 200) {
       if (code == 401)  {
         message = "لطفا مجددا به پنل لاگین کنید."
+        this.router.navigate(['/login']);
       }
       this._snackBar.open(message, action, {
         panelClass: ['snack-bar-container-custom']
