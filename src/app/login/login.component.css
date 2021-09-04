@@ -1,0 +1,26 @@
+:host {
+  width: 100%;
+  height: calc(100vh - 90px);
+
+  }
+
+  * {
+      font-size: 2rem!important;
+      color: white!important;
+  }
+
+  .login-box {
+    background-color: transparent;
+     text-align: right;
+     box-shadow: none;
+  }
+
+  .login-content {
+      background-image: url('../../assets/tebbino.jpeg');
+    height: 100%;
+     background-position: center;
+     background-size: cover;
+     background-repeat: no-repeat;
+  }
+
+  

@@ -120,7 +120,23 @@
       <mat-icon title= 'ایجاد' class="black-color" (click)='create(createCenter)'> check </mat-icon>
     </div>
      
-  
+    <div class="filter">
+      <span>فیلتر مراکز</span>
+      <mat-icon title="فیلتر مرکز"  (click)='showFilterForm()' style="direction: rtl;"> library_search </mat-icon>
+      </div>
+
+      <div *ngIf='filterForm'>
+        <mat-form-field style="float: right;">
+          <mat-label>نوع مرکز</mat-label>
+         <mat-select [(ngModel)] = 'filterCenter.type_id' [(value)]="filterCenter.type_id">
+           <mat-option *ngFor='let center_type of this.CenterTypes' value='{{center_type.id}}' >
+               {{ center_type.name }}
+           </mat-option>
+           </mat-select>
+        </mat-form-field> 
+
+        <mat-icon title= 'فیلتر' class="black-color" (click)='filter(filterCenter)' style="float: right;line-height: 3vw;"> check </mat-icon>
+      </div>
   
    <h1>{{ title }}</h1>
   <table mat-table [dataSource]="Centers" class="mat-elevation-z8">

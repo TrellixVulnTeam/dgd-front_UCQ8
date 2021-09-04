@@ -45,8 +45,8 @@
         color: black;
     }
 
-    .create-new {
-        text-align: right; color: black;
+    .create-new, .filter {
+       float: right; color: black; margin: 30px;
     }
 
     .dialog-content-container {

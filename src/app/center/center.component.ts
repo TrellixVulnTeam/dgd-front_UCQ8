@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { AddressModel, CenterModel, City, ImageModel, InsuranceCompanyCenterModel, DoctorCenterModel, PhoneModel, Pivot, Province, SpecialTestCenterModel } from './center-model.component';
-import { ImageUrl, EditCenterUrl, EditHourseOfWorkUrl, GetCentersUrl, PhoneUrl, AddressUrl, SpecialTestsCenterUrl, InsuranceCompaniesCenterUrl, GetProvincesUrl, GetCitiesUrl, DownloadImgUrl, CenterDoctorUrl, GetDoctorsUrl } from '../configUrls';
+import { ImageUrl, EditCenterUrl, EditHourseOfWorkUrl, GetCentersUrl, PhoneUrl, AddressUrl, SpecialTestsCenterUrl, InsuranceCompaniesCenterUrl, GetProvincesUrl, GetCitiesUrl, DownloadImgUrl, CenterDoctorUrl, GetDoctorsUrl, FilterUrl } from '../configUrls';
 import { DialogService } from '../shared/dialog.service';
 import { AppComponent } from '../app.component';
 import { SpecialTestModel } from '../special-test/special-test-model.component';
@@ -22,7 +22,8 @@ import { catchError } from 'rxjs/operators';
 })
 export class CenterComponent implements OnInit {
   title = 'لیست مراکز' ;
-  createForm : boolean = false ;
+  createForm : boolean = false;
+  filterForm : boolean = false;
   displayedColumns: string[] = [  
           'id' ,
          'name' ,
@@ -81,7 +82,8 @@ emptyProvince = new Province(32,1,'',''); //  defult no provicne with id= 32
 emptyCities = new City(473,32,'','');//  defult no city with id= 473
 
   technical_manager_name = 'ندارد';
-  createCenter = new CenterModel(0, '', '', this.technical_manager_name, 0, '', 0, 0, 13, 'private', 0 , 0, '' , 'post',false, false, false, false, false,false,1,32,473,null ,[],[],this.emptyProvince,this.emptyCities,[],[],[], [],[],[]);
+  createCenter = new CenterModel(0, '', '', this.technical_manager_name, 0, '', 0, 0, 13, 'private', 0 , 0, 'centers', '' , 'post',false, false, false, false, false,false,1,32,473,null ,[],[],this.emptyProvince,this.emptyCities,[],[],[], [],[],[]);
+  filterCenter = new CenterModel(0, '', '', this.technical_manager_name, 0, '', 0, 0, 13, 'private', 0 , 0, 'centers', '' , 'post',false, false, false, false, false,false,1,32,473,null ,[],[],this.emptyProvince,this.emptyCities,[],[],[], [],[],[]);
   createPhone = new PhoneModel(0,'','centers','post');
   createAddress = new AddressModel(0,'','','centers','post');
   
@@ -251,7 +253,8 @@ emptyCities = new City(473,32,'','');//  defult no city with id= 473
 
 
   showCreateForm() {
-    this.createForm = true;
+    this.createForm = !this.createForm;
+    this.filterForm = false;
     this.CenterTypes = this.centerTypeComponent.CenterTypes;
     this.HoursOfWorks = this.hoursOfWorkComponent.HourseOfWorks;
   }
@@ -612,6 +615,38 @@ emptyCities = new City(473,32,'','');//  defult no city with id= 473
       case "special_doctors": 
     }
  
+  }
+
+  showFilterForm() {
+    this.filterForm = !this.filterForm;
+    this.createForm = false;
+    this.CenterTypes = this.centerTypeComponent.CenterTypes;
+    this.HoursOfWorks = this.hoursOfWorkComponent.HourseOfWorks;
+
+  }
+
+  filter(center: CenterModel) {
+    console.log(center);
+    this.httpClient.post<any>(FilterUrl, center).pipe(
+      catchError(this.appComponent.handleError<any[]>('', [])),  
+    ).subscribe(
+      response => {
+        console.log(response);
+        this.appComponent.loading= false;
+       if (response.success == true) {
+        this.appComponent.openSnackBar('عملیات با موفقیت انجام شد','ok');
+        this.Centers = response.data;
+          this.Centers.forEach(element => {
+            element.is_editable =false;
+          })
+       } 
+        if (response.success == false) {
+        console.log(response.message);
+        this.appComponent.openSnackBar(response.message,'ok');
+       }
+      }
+    );
+    
   }
 
 }

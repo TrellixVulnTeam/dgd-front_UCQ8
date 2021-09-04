@@ -55,3 +55,5 @@ export const CenterDoctorUrl = BaseUrl + 'doctor_center'
 
 export const DownloadImgUrl = BaseUrl
 
+// filter
+export const FilterUrl = BaseUrl + 'search'

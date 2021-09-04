@@ -1,16 +1,19 @@
-<mat-card>
+<div class='login-content'>
+<mat-card class="login-box">
     <mat-card-title>صفحه‌ی ورود</mat-card-title>
 <mat-card-content>
 <form [formGroup]="form" (ngSubmit)="login()">
   <p>
     <mat-form-field>
-      <input type="text" matInput placeholder="نام کاربری" formControlName="username">
+      <input type="text" matInput formControlName="username">
+      <mat-placeholder class="placeholder" style="opacity: 0.3!important;">نام کاربری</mat-placeholder>
     </mat-form-field>
   </p>
 
   <p>
     <mat-form-field>
-      <input type="password" matInput placeholder="رمز عبور" formControlName="password">
+      <input type="password" matInput formControlName="password">
+      <mat-placeholder class="placeholder" style="opacity: 0.3!important;">رمز عبور</mat-placeholder>
     </mat-form-field>
   </p>
 
@@ -26,3 +29,4 @@
 </form>
 </mat-card-content>
 </mat-card>
+</div>
